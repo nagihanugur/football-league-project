@@ -1,0 +1,20 @@
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 2MB
+      max-request-size: 2MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/leaguedb
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      generate_statistics: true
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:db/changelog-master.xml
+    enabled: true
+  

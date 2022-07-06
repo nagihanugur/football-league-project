@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/footballleagueapi/teams")
+@RequestMapping("leagueapi/teams")
 public class TeamController {
 
     private final TeamService teamService;

@@ -1,47 +1,52 @@
 package com.example.footballleagueapi.dto;
 
+import com.example.footballleagueapi.entity.GameState;
+import com.example.footballleagueapi.entity.Goal;
 import com.example.footballleagueapi.entity.Team;
 
 public class TeamDto {
 
-    private Integer id;
+    private Integer teamId;
     private String name;
     private String features;
     private String emblem;
     private Float power;
     private Integer point;
-    private Integer goals;
+    private Goal goal;
+    private GameState gameState;
 
     public TeamDto(){
 
     }
 
-    public TeamDto(Integer id, String name, String features, String emblem, Float power, Integer point, Integer goals){
-        this.id = id;
+    public TeamDto(Integer teamId, String name, String features, String emblem, Float power, Integer point, Goal goal, GameState gameState){
+        this.teamId = teamId;
         this.name = name;
         this.emblem = emblem;
         this.features = features;
         this.power = power;
         this.point = point;
-        this.goals = goals;
+        this.goal = goal;
+        this.gameState = gameState;
     }
 
     public TeamDto(Team team){
-        this.id = team.getId();
+        this.teamId = team.getTeamId();
         this.name = team.getName();
         this.features = team.getFeatures();
         this.emblem = team.getEmblem();
         this.power = team.getPower();
         this.point = team.getPoint();
-        this.goals = team.getGoals();
+        this.goal = team.getGoal();
+        this.gameState = team.getGameState();
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getTeamId() {
+        return teamId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
     }
 
     public String getName() {
@@ -84,11 +89,19 @@ public class TeamDto {
         this.point = point;
     }
 
-    public Integer getGoals() {
-        return goals;
+    public Goal getGoal() {
+        return goal;
     }
 
-    public void setGoals(Integer goals) {
-        this.goals = goals;
+    public void setGoal(Goal goal) {
+        this.goal = goal;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }

@@ -1,4 +1,5 @@
 package com.example.footballleagueapi.entity;
+import com.example.footballleagueapi.entity.Goal;
 
 import javax.persistence.*;
 
@@ -8,8 +9,8 @@ public class Team {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "team_id")
+    private Integer teamId;
 
     @Column(name = "name")
     private String name;
@@ -26,26 +27,34 @@ public class Team {
     @Column(name = "point")
     private Integer point;
 
-    @Column(name = "goals")
-    private Integer goals;
+    @ManyToOne
+    @JoinColumn(name = "goal_id", nullable = false)
+    private Goal goal;
+
+    @ManyToOne
+    @JoinColumn(name = "state_id", nullable = false)
+    private GameState gameState;
+
+
 
     public Team(){
 
     }
-    public Team(Integer id, String name, String emblem, String features, Float power, Integer point, Integer goals){
-        this.id = id;
+    public Team(Integer teamId, String name, String emblem, String features, Float power, Integer point, Goal goal, GameState gameState){
+        this.teamId = teamId;
         this.name = name;
         this.emblem = emblem;
         this.features = features;
         this.power = power;
         this.point = point;
-        this.goals = goals;
+        this.goal = goal;
+        this.gameState = gameState;
     }
 
-    public Integer getId(){return id;}
+    public Integer getTeamId(){return teamId;}
 
-    public void setId(Integer id){
-        this.id = id;
+    public void setTeamId(Integer team_id){
+        this.teamId = teamId;
     };
 
     public String getName(){return name;}
@@ -78,9 +87,17 @@ public class Team {
         this.point = point;
     }
 
-    public Integer getGoals(){return goals;}
+    public Goal getGoal(){return goal;}
 
-    public void setGoals(Integer goals) {
-        this.goals = goals;
+    public void setGoal(Goal goal) {
+        this.goal = goal;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }

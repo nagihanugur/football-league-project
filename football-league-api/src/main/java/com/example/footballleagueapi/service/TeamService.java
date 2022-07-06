@@ -23,9 +23,10 @@ public class TeamService {
 
     public ServiceResult<List<TeamDto>> getAll(){
 
-        List<Team> teams = teamRepository.getAllTeams();
+        List<Team> teams = teamRepository.findAllByOrderById();
         List<TeamDto> teamDtos = teamMapper.toTeamDtoList(teams);
 
-        return (ServiceResult<List<TeamDto>>) teamDtos;
+
+        return new ServiceResult<List<TeamDto>>(teamDtos);
     }
 }

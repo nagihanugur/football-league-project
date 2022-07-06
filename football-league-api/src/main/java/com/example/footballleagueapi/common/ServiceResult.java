@@ -14,6 +14,16 @@ public class ServiceResult<T> {
         this.success = success;
         this.errorMessage = errorMessage;
     }
+    public ServiceResult(T data) {
+        this.data = data;
+    }
+    public ServiceResult( boolean success, String errorMessage){
+
+        this.success = success;
+        this.errorMessage = errorMessage;
+    }
+
+
 
     public T getData() {
         return data;

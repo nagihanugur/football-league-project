@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ITeamRepository extends CrudRepository<Team, Integer> {
 
-    List<Team> findAllByOrderById();
-   // List<Team> getAllOrderByTeamID();
+
+    List<Team> getAllByOrderByTeamId();
 
 }

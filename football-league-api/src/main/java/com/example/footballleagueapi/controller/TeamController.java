@@ -22,7 +22,7 @@ public class TeamController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TeamDto>> getTeams(){
+    public ResponseEntity<List<TeamDto>> getAllTeams(){
 
         if(teamService.getAll().isSuccess()){
 

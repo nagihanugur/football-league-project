@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GoalMapper {
 
-    public GoalDto toGoalDto( Goal goal){
+    public GoalDto toGoalDto(Goal goal){
 
         GoalDto dto = new GoalDto();
         dto.setGoalId(goal.getGoalId());

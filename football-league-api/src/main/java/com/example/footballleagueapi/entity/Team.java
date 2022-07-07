@@ -7,8 +7,8 @@ import javax.persistence.*;
 @Table(name = "team")
 public class Team {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_id")
     private Integer teamId;
 

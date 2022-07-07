@@ -23,7 +23,7 @@ public class GameStateService {
 
     public ServiceResult<List<GameStateDto>> getAllState(){
 
-        List<GameState> states = gameStateRepository.findAllByOrderByStateId();
+        List<GameState> states = gameStateRepository.getAllByOrderByStateId();
         List<GameStateDto> stateDtos = gameStateMapper.toGameStateList(states);
 
         return new ServiceResult<>(stateDtos);

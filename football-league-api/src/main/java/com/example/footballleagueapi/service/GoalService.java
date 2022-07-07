@@ -21,20 +21,13 @@ public class GoalService {
         this.goalMapper = new GoalMapper();
     }
 
-     public ServiceResult<GoalDto> getAllGoalById(Integer goalId){
+   public ServiceResult<List<GoalDto>> getAllGoals(){
 
-        ServiceResult<GoalDto> serviceResult = new ServiceResult<>();
-        Optional<Goal> goal = goalRepository.findById(goalId);
+        List<Goal> goals = goalRepository.getAllByOrderByGoalId();
+        List<GoalDto> goalDtoList = goalMapper.toGoalDtoList(goals);
 
-        if (goal.isPresent()){
-
-            serviceResult.setData(goalMapper.toGoalDto(goal.get()));
-            return serviceResult;
-        }
-        serviceResult.setSuccess(false);
-        serviceResult.setErrorMessage("can't found any goal with this id");
-        return serviceResult;
-    }
+        return new ServiceResult<List<GoalDto>>(goalDtoList);
+   }
 
 
 }

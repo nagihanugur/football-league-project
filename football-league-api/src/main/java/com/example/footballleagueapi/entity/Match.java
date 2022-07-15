@@ -3,6 +3,7 @@ package com.example.footballleagueapi.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "matches")
@@ -13,32 +14,42 @@ public class Match {
     @Column(name = "match_id")
     private Integer matchId;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "team_first")
     private Team teamFirst;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "team_second")
     private Team teamSecond;
 
-    @Column(name = "goal_ft")
+    @Column(name = "goal_ft", nullable = true)
     private Integer goalFt;
 
-    @Column(name = "goal_st")
+    @Column(name = "goal_st", nullable = true)
     private Integer goalSt;
 
 
     @Column(name = "match_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime matchDate;
+    @Temporal(TemporalType.DATE)
+    private Date matchDate;
 
     public Match(){
 
     }
 
 
-    public Match(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, LocalDateTime  matchDate){
+    public Match(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Date  matchDate){
         this.matchId = matchId;
+        this.teamFirst = teamFirst;
+        this.teamSecond = teamSecond;
+        this.goalFt = goalFt;
+        this.goalSt = goalSt;
+        this.matchDate = matchDate;
+
+    }
+
+    public Match( Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Date  matchDate){
+
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
         this.goalFt = goalFt;
@@ -87,11 +98,11 @@ public class Match {
         this.goalSt = goalSt;
     }
 
-    public LocalDateTime getMatchDate() {
+    public Date getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(LocalDateTime matchDate) {
+    public void setMatchDate(Date matchDate) {
         this.matchDate = matchDate;
     }
 }

@@ -7,6 +7,7 @@ import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,15 @@ public class GoalController {
 
         return ResponseEntity.badRequest().build();
 
+    }
+
+    @PostMapping
+    public ResponseEntity<GoalDto> saveGoal(GoalDto dto){
+        if (goalService.addGoal(dto).isSuccess()){
+            return new ResponseEntity<>(goalService.addGoal(dto).getData(), HttpStatus.OK);
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
 }

@@ -29,5 +29,21 @@ public class GoalService {
         return new ServiceResult<List<GoalDto>>(goalDtoList);
    }
 
+   public ServiceResult<GoalDto> addGoal(GoalDto goalDto){
+        ServiceResult<GoalDto> serviceResult = new ServiceResult<>();
+        if (goalDto.getGoalId() == null || goalDto.getGoalCount() == null){
+
+            serviceResult.setErrorMessage("Please fill all requirements!!");
+            serviceResult.setSuccess(false);
+            return serviceResult;
+        }
+        Goal addedGoal = goalRepository.save(goalMapper.toGoal(goalDto));
+        serviceResult.setData(goalMapper.toGoalDto(addedGoal));
+        return serviceResult;
+
+
+
+   }
+
 
 }

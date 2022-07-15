@@ -27,12 +27,12 @@ public class Team {
     @Column(name = "point")
     private Integer point;
 
-    @ManyToOne
-    @JoinColumn(name = "goal_id", nullable = false)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "goal_id")
     private Goal goal;
 
-    @ManyToOne
-    @JoinColumn(name = "state_id", nullable = false)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "state_id" )
     private GameState gameState;
 
 
@@ -53,7 +53,7 @@ public class Team {
 
     public Integer getTeamId(){return teamId;}
 
-    public void setTeamId(Integer team_id){
+    public void setTeamId(Integer id){
         this.teamId = teamId;
     };
 

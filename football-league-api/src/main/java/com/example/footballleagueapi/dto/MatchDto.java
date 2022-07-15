@@ -4,6 +4,7 @@ import com.example.footballleagueapi.entity.Match;
 import com.example.footballleagueapi.entity.Team;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class MatchDto {
 
@@ -12,12 +13,12 @@ public class MatchDto {
     private Team teamSecond;
     private Integer goalFt;
     private Integer goalSt;
-    private LocalDateTime matchDate;
+    private Date matchDate;
 
     public MatchDto(){
 
     }
-    public MatchDto(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, LocalDateTime matchDate){
+    public MatchDto(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Date matchDate){
 
         this.matchId = matchId;
         this.teamFirst = teamFirst;
@@ -77,11 +78,11 @@ public class MatchDto {
         this.goalSt = goalSt;
     }
 
-    public LocalDateTime getMatchDate() {
+    public Date getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(LocalDateTime matchDate) {
+    public void setMatchDate(Date matchDate) {
         this.matchDate = matchDate;
     }
 }

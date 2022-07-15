@@ -2,12 +2,12 @@ package com.example.footballleagueapi.controller;
 
 import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.TeamDto;
+import com.example.footballleagueapi.entity.Team;
 import com.example.footballleagueapi.service.TeamService;
+import org.apache.tomcat.util.http.HeaderUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +31,30 @@ public class TeamController {
 
         return ResponseEntity.badRequest().build();
 
+    }
+
+    @GetMapping("/{teamId}")
+    public ResponseEntity<TeamDto> getAllById(@PathVariable Integer teamId){
+
+        if (teamService.getTeamById(teamId).isSuccess()){
+            return new ResponseEntity<>(teamService.getTeamById(teamId).getData(), HttpStatus.OK);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping()
+    public ResponseEntity<TeamDto> save(@RequestBody TeamDto teamDto){
+        ServiceResult<TeamDto> serviceResult = teamService.saveTeam(teamDto);
+
+        if (serviceResult.isSuccess()){
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
+
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/{teamId}")
+    public ResponseEntity<Void> deleteTeamById(@PathVariable Integer teamId){
+        return new ResponseEntity<>(teamService.deleteTeamById(teamId).getData(), HttpStatus.OK);
     }
 }

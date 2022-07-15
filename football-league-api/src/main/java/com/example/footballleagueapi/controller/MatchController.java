@@ -1,12 +1,11 @@
 package com.example.footballleagueapi.controller;
 
 import com.example.footballleagueapi.dto.MatchDto;
+import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.service.MatchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +25,17 @@ public class MatchController {
         if (matchService.getAllMatches().isSuccess()){
             return new ResponseEntity<>(matchService.getAllMatches().getData(), HttpStatus.OK);
         }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<List<MatchDto>> getCreatingMatches(@RequestBody List<TeamDto> teamList){
+        if(matchService.createAllMatches(teamList).isSuccess()){
+
+            return new ResponseEntity<>(matchService.createAllMatches(teamList).getData(), HttpStatus.OK);
+
+        }
+
         return ResponseEntity.badRequest().build();
     }
 }

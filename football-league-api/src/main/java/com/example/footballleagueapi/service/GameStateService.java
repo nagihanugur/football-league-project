@@ -3,8 +3,10 @@ package com.example.footballleagueapi.service;
 
 import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.GameStateDto;
+import com.example.footballleagueapi.dto.GoalDto;
 import com.example.footballleagueapi.dto.mapper.GameStateMapper;
 import com.example.footballleagueapi.entity.GameState;
+import com.example.footballleagueapi.entity.Goal;
 import com.example.footballleagueapi.repository.IGameStateRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,24 @@ public class GameStateService {
         return new ServiceResult<>(stateDtos);
 
     }
+
+    public ServiceResult<GameStateDto> addState( GameStateDto stateDto){
+        ServiceResult<GameStateDto> serviceResult = new ServiceResult<>();
+        if (stateDto.getStateId() == null || stateDto.getWon() == null || stateDto.getDraw() == null || stateDto.getLose() == null ||
+        stateDto.getPlayed() == null){
+
+            serviceResult.setErrorMessage("Please fill all requirements!!");
+            serviceResult.setSuccess(false);
+            return serviceResult;
+        }
+        GameState addedState = gameStateRepository.save(gameStateMapper.toGameState(stateDto));
+        serviceResult.setData(gameStateMapper.toGameStateDto(addedState));
+        return serviceResult;
+
+
+
+    }
+
 
 
 }

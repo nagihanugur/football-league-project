@@ -34,10 +34,42 @@ public class MatchService {
         return new ServiceResult<List<MatchDto>>(matchDtoList);
     }
 
+   /* public ServiceResult<List<MatchDto>> createAllMatches(List<TeamDto> teamDtoList){
+        List<Match> matchList = new ArrayList<>();
+
+        int sumMatch = teamDtoList.size() - 1;
+
+        Collections.shuffle(teamDtoList);
+
+        for(int i = 1; i <= teamDtoList.size(); i++){
+            for(int j = 1; j <= teamDtoList.size(); j++){
+
+                int firstTeam = i;
+                int secondTeam = j;
+
+                if(teamDtoList.get(firstTeam) != teamDtoList.get(secondTeam)){
+
+                    Date nowTime = new Date();
+
+                    matchList.add(new Match(teamMapper.toTeam(teamDtoList.get(firstTeam)),teamMapper.toTeam(teamDtoList.get(secondTeam)),null,null, nowTime));
+
+                }
+            }
+        }
+
+        Collections.shuffle(matchList);
+
+        return new ServiceResult<List<MatchDto>>(matchMapper.toMatchDtoList(matchList));
+    }*/
+
+    //Tek haftalık
+
     public ServiceResult<List<MatchDto>> createAllMatches(List<TeamDto> teamDtoList) {
 
+        ServiceResult<List<MatchDto>> serviceResult = new ServiceResult<>();
+
         List<Match> matchList = new ArrayList<>();
-        //List<MatchDto> matchDtoList = new ArrayList<>();
+        List<MatchDto> matchDtoList = (List<MatchDto>) getAllMatches();
         //List<TeamDto> tempList = new ArrayList<>();
 
         //int sumMatch = teamDtoList.size() - 1;
@@ -45,23 +77,33 @@ public class MatchService {
 
         Collections.shuffle(teamDtoList);
 
-
+        if(firstHalf % 2 == 0) {
             for (int j = 1; j <= firstHalf; j++) {
 
                 int firstTeam = j;
                 int secondTeam = (teamDtoList.size() + 1) - j;
-                Date nowTime = new Date();
+                Date firstTime = new Date();
+                Date secondTime = new Date();
 
+                Match match = (new Match(teamMapper.toTeam(teamDtoList.get(firstTeam)), teamMapper.toTeam(teamDtoList.get(secondTeam)), null, null, firstTime));
+                Match match2 = (new Match(teamMapper.toTeam(teamDtoList.get(secondTeam)), teamMapper.toTeam(teamDtoList.get(firstTeam)),null,null, secondTime));
+                if (matchDtoList.contains(match)) {
+                    serviceResult.setSuccess(false);
+                    serviceResult.setErrorMessage("This match is already exist!");
+                    return serviceResult;
+                }
 
-                matchList.add(new Match(teamMapper.toTeam(teamDtoList.get(firstTeam)),teamMapper.toTeam(teamDtoList.get(secondTeam)),null,null, nowTime));
-
+                matchList.add(match);
+                matchList.add(match2);
 
             }
 
 
-
-        return new ServiceResult<List<MatchDto>>(matchMapper.toMatchDtoList(matchList));
-
+            return new ServiceResult<List<MatchDto>>(matchMapper.toMatchDtoList(matchList));
+        }
+        serviceResult.setSuccess(false);
+        serviceResult.setErrorMessage("Please add team as even count");
+        return serviceResult;
 
     }
 

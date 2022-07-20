@@ -1,5 +1,6 @@
 package com.example.footballleagueapi.controller;
 
+import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.MatchDto;
 import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.service.MatchService;
@@ -28,9 +29,12 @@ public class MatchController {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping
+
+   @PostMapping
     public ResponseEntity<List<MatchDto>> getCreatingMatches(@RequestBody List<TeamDto> teamList){
-        if(matchService.createAllMatches(teamList).isSuccess()){
+        ServiceResult<List<MatchDto>> allMatches = matchService.createAllMatches(teamList);
+
+        if(allMatches.isSuccess()){
 
             return new ResponseEntity<>(matchService.createAllMatches(teamList).getData(), HttpStatus.OK);
 

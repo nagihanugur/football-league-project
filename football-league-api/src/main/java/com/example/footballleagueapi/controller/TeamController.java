@@ -42,7 +42,7 @@ public class TeamController {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping()
+    @PostMapping("/save")
     public ResponseEntity<TeamDto> save(@RequestBody TeamDto teamDto){
         ServiceResult<TeamDto> serviceResult = teamService.saveTeam(teamDto);
 
@@ -53,7 +53,7 @@ public class TeamController {
         return ResponseEntity.badRequest().build();
     }
 
-    @DeleteMapping("/{teamId}")
+    @DeleteMapping("/delete/{teamId}")
     public ResponseEntity<Void> deleteTeamById(@PathVariable Integer teamId){
         return new ResponseEntity<>(teamService.deleteTeamById(teamId).getData(), HttpStatus.OK);
     }

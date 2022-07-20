@@ -1,0 +1,27 @@
+<header class="header-area overlay">
+
+  <div class="banner">
+    <div class="container">
+      <h1>Welcome Football Manager Game!</h1>
+      <p>You can create your teams and fixture. Then start the game! </p>
+      <a href="#content" class="button button-primary" >Create Teams</a>
+
+    </div>
+
+  </div>
+
+</header>
+
+<main>
+  <section id="content" class="content">
+
+    <div class="container" >
+      <div class="row">
+      <div *ngFor="let filtered of filteredTeams" class="card col-md-6 p-2 mx-3" style="width: 18rem;">
+        <img class="card-img-top" src="{{filtered.emblem}}" alt="Card image cap">
+
+      </div>
+    </div>
+    </div>
+  </section>
+</main>

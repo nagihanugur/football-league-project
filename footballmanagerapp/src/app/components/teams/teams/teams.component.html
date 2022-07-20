@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="main-box clearfix">
+        <div class="table-responsive">
+          <table class="table user-list">
+            <thead>
+            <tr>
+              <th><span>Team</span></th>
+              <th><span>Features</span></th>
+              <th class="text-center"><span>Power</span></th>
+              <th><span>Point</span></th>
+              <th><span>Won</span></th>
+              <th><span>Lose</span></th>
+              <th><span>Draw</span></th>
+              <th><span>Played</span></th>
+              <th><span>Goal</span></th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let team of teams">
+              <td>
+                <img src="{{team.emblem}}" alt="">
+                <a href="#" class="user-link">{{team.name}}</a>
+
+              </td>
+              <td>
+                {{team.features}}
+              </td>
+              <td class="text-center">
+                <span class="label label-default">{{team.power}}</span>
+              </td>
+              <td>
+                {{team.point}}
+              </td>
+              <td>
+                {{team.gameState?.won}}
+              </td>
+              <td>
+                {{team.gameState?.lose}}
+              </td>
+              <td>
+                {{team.gameState?.draw}}
+              </td>
+              <td>
+                {{team.gameState?.played}}
+              </td>
+              <td>
+                {{team.goal?.goalCount}}
+              </td>
+              <td style="width: 20%;">
+                <a href="#" class="table-link">
+									<span class="fa-stack">
+										<i class="fa fa-square fa-stack-2x"></i>
+										<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+									</span>
+                </a>
+                <a href="#" class="table-link">
+									<span class="fa-stack">
+										<i class="fa fa-square fa-stack-2x"></i>
+										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+									</span>
+                </a>
+                <a href="#" class="table-link danger">
+									<span class="fa-stack">
+										<i class="fa fa-square fa-stack-2x"></i>
+										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+									</span>
+                </a>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <ul class="pagination pull-right">
+          <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

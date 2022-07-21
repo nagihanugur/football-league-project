@@ -22,6 +22,11 @@ public class Goal {
         this.goalCount = goalCount;
 
     }
+    public Goal( Integer goalCount){
+        this.goalId = goalId;
+        this.goalCount = goalCount;
+
+    }
 
     public Integer getGoalId() {
         return goalId;

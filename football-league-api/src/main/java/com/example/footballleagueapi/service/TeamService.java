@@ -4,6 +4,7 @@ import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.dto.mapper.TeamMapper;
 import com.example.footballleagueapi.entity.Team;
+import com.example.footballleagueapi.repository.IGoalRepository;
 import com.example.footballleagueapi.repository.ITeamRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +17,15 @@ public class TeamService {
 
     private final ITeamRepository teamRepository;
     private final TeamMapper teamMapper;
+    private final IGoalRepository goalRepository;
 
-    public TeamService(ITeamRepository teamRepository) {
+
+    public TeamService(ITeamRepository teamRepository, IGoalRepository goalRepository, GoalService goalService) {
         this.teamRepository = teamRepository;
+        this.goalRepository = goalRepository;
+
         this.teamMapper = new TeamMapper();
+
     }
 
 
@@ -55,8 +61,8 @@ public class TeamService {
         ServiceResult<TeamDto> serviceResult = new ServiceResult<>();
 
       if(teamRepository.findTeamByTeamId(teamDto.getTeamId()) == null){
-          if (teamDto.getName() == null || teamDto.getEmblem() == null || teamDto.getPower() ==null || teamDto.getFeatures() ==null
-          ){
+          if (teamDto.getName() == null || teamDto.getEmblem() == null || teamDto.getPower() ==null || teamDto.getFeatures() == null
+                  || goalRepository.existsById(teamDto.getGoal().getGoalId())){
 
               serviceResult.setSuccess(false);
               serviceResult.setErrorMessage("Please fill all requirements!");

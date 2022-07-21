@@ -2,6 +2,7 @@ package com.example.footballleagueapi.service;
 
 import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.GoalDto;
+import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.dto.mapper.GoalMapper;
 import com.example.footballleagueapi.entity.Goal;
 import com.example.footballleagueapi.repository.IGoalRepository;
@@ -31,7 +32,7 @@ public class GoalService {
 
    public ServiceResult<GoalDto> addGoal(GoalDto goalDto){
         ServiceResult<GoalDto> serviceResult = new ServiceResult<>();
-        if (goalDto.getGoalId() == null || goalDto.getGoalCount() == null){
+        if ( goalDto.getGoalCount() == null){
 
             serviceResult.setErrorMessage("Please fill all requirements!!");
             serviceResult.setSuccess(false);
@@ -42,6 +43,25 @@ public class GoalService {
         return serviceResult;
 
 
+
+   }
+
+   public ServiceResult<GoalDto> getGoal(Integer goalId){
+
+       ServiceResult<GoalDto> serviceResult = new ServiceResult<>();
+
+       Optional<Goal> goal = goalRepository.findById(goalId);
+
+       if (goal.isPresent()){
+
+           serviceResult.setData(goalMapper.toGoalDto(goal.get()));
+           return serviceResult;
+
+       }
+
+       serviceResult.setSuccess(false);
+       serviceResult.setErrorMessage("this goal was not found...");
+       return serviceResult;
 
    }
 

@@ -12,7 +12,7 @@ public interface IGoalRepository extends CrudRepository<Goal, Integer> {
 
     //List<Goal> GetAllGoalsByGoalId();
    // List<Goal> findAllByOrderByGoalId(Integer id);
-   // List<Goal> findByGoalId(Integer id);
+    Goal findByGoalId(Integer id);
     List<Goal> getAllByOrderByGoalId();
 
 }

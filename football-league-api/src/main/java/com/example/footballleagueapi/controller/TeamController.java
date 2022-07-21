@@ -36,7 +36,8 @@ public class TeamController {
     @GetMapping("/{teamId}")
     public ResponseEntity<TeamDto> getAllById(@PathVariable Integer teamId){
 
-        if (teamService.getTeamById(teamId).isSuccess()){
+        ServiceResult<TeamDto> serviceResult = teamService.getTeamById(teamId);
+        if (serviceResult.isSuccess()){
             return new ResponseEntity<>(teamService.getTeamById(teamId).getData(), HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();

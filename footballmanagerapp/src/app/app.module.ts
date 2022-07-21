@@ -9,19 +9,22 @@ import {HttpService} from "./services/http.service";
 import { HomeComponent } from './components/home/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import {RouterModule} from "@angular/router";
+import {ReactiveFormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TeamsComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   providers: [
     HttpService

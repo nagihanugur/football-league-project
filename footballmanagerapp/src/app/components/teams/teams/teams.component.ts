@@ -3,6 +3,7 @@ import {Team} from "../../../team";
 import {HttpService} from "../../../services/http.service";
 import {HttpErrorResponse} from "@angular/common/http";
 
+
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
@@ -12,10 +13,14 @@ export class TeamsComponent implements OnInit {
 
   public teams : Team[]= [];
 
-  constructor(private httpService : HttpService) { }
+
+  constructor(private httpService : HttpService ) { }
 
   ngOnInit(): void {
+
     this.getTeams();
+
+
   }
 
   public getTeams(): void{
@@ -27,5 +32,6 @@ export class TeamsComponent implements OnInit {
         alert(error.message);
       });
   }
+
 
 }

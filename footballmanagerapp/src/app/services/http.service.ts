@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Team} from "../team";
+import {Goal} from "../goal";
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,10 @@ export class HttpService {
 
   public deleteTeam(teamId : number) : Observable<void>{
     return this.http.delete<void>(`${this.apiServerUrl}/teams/delete/${teamId}`);
+  }
+
+  public addGoal(goalId : number) : Observable<Goal>{
+
+    return this.http.post<Goal>(`${this.apiServerUrl}/teams/goal`, goalId);
   }
 }

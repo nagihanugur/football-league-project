@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
+import {FormGroup, FormBuilder} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {HttpService} from "./services/http.service";
 
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit{
 
 
 
-  constructor(private httpService : HttpService) {
+  constructor(private httpService : HttpService, fb: FormBuilder) {
   }
 
   ngOnInit() {

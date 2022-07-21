@@ -26,6 +26,18 @@ const routes: Routes = [
 
 
   },
+  {
+    path : 'states',
+    loadChildren : () : Promise<any> =>
+      import('./components/states/states.module').then(
+        (m)=> m.StatesModule),
+  },
+  {
+    path : 'saveTeam',
+    loadChildren : () : Promise<any> =>
+      import('./components/save-team/save-team.module').then(
+        (m)=> m.SaveTeamModule),
+  }
 
 ];
 

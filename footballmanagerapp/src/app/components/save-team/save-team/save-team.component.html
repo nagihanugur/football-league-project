@@ -1,0 +1,41 @@
+<form [formGroup]="goalForm">
+  <div class="form-group">
+    <input type="number" formControlName="goalCount" class="form-control">
+  </div>
+
+  <button class="btn btn-success" (click)="addGoals()" >submit</button>
+
+</form>
+
+
+
+<form [formGroup]="teamForm" >
+  <div class="form-group">
+    <label >Team Name</label>
+    <input type="text" class="form-control" formControlName="name"   placeholder="Enter team name">
+
+  </div>
+  <div class="form-group">
+    <label >Emblem</label>
+    <input type="text" class="form-control" formControlName="emblem" placeholder="Enter emblem">
+  </div>
+  <div class="form-group">
+    <label >Features</label>
+    <input type="text" class="form-control" formControlName="features"   placeholder="Enter feautures">
+
+  </div>
+  <div class="form-group">
+    <label >Power</label>
+    <input type="number" class="form-control" formControlName="power"  placeholder="power">
+  </div>
+  <div class="form-group">
+    <label >Point</label>
+    <input type="number" class="form-control" formControlName="point"  placeholder="point">
+  </div>
+  <div class="form-group" formGroupName="goal">
+    <label >Goal</label>
+    <input type="number" class="form-control" formControlName="goalId"  placeholder="Exist goal id">
+    <input type="number" class="form-control" formControlName="goalCount"  placeholder="goal count">
+  </div>
+  <button type="submit" class="btn btn-primary mt-3" [disabled]="teamForm.invalid" (click)="createTeam()">Submit</button>
+</form>

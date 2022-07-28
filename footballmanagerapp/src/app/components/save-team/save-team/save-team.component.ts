@@ -14,7 +14,8 @@ export class SaveTeamComponent implements OnInit {
 
   teamForm ! : FormGroup;
   team : Team [] = [];
-  goalForm! : FormGroup;
+  message : Boolean=false;
+
 
 
   constructor(private http : HttpService, private fb : FormBuilder) { }
@@ -26,15 +27,15 @@ export class SaveTeamComponent implements OnInit {
       features : '',
       power : 50,
       point : 0,
-      goal : this.fb.group({
-        goalId : null,
-        goalCount : 0
+      gameState : this.fb.group({
+        stateId : null,
+        won : 0,
+        lose : 0,
+        draw : 0,
+        played : 0
       })
     });
 
-    this.goalForm = this.fb.group({
-      goalCount : 0
-    })
 
   }
 
@@ -43,12 +44,14 @@ export class SaveTeamComponent implements OnInit {
 
      this.http.addTeam(this.teamForm.value).subscribe((result) =>
      console.log(result));
+    this.message = true;
   }
 
-  addGoals(){
-    this.http.addGoal(this.goalForm.value).subscribe((result) =>
-      console.log(result));
+  removeMessage(){
+    this.message = false;
   }
+
+
 
 
 

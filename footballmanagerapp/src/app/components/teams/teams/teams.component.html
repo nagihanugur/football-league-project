@@ -1,4 +1,8 @@
 
+<div *ngIf="message" class="alert alert-success" role="alert">
+  <strong>Success! Team is deleted...</strong>
+  <button (click)="removeMessage()" type="button" class="btn btn-light">X</button>
+</div>
 
 
 <div class="container">
@@ -13,12 +17,10 @@
               <th><span>Features</span></th>
               <th class="text-center"><span>Power</span></th>
               <th><span>Point</span></th>
-              <th><span>Won</span></th>
-              <th><span>Lose</span></th>
-              <th><span>Draw</span></th>
-              <th><span>Played</span></th>
-              <th><span>Goal</span></th>
-              <th>&nbsp;</th>
+
+
+
+              <th></th>
             </tr>
             </thead>
             <tbody>
@@ -37,40 +39,16 @@
               <td>
                 {{team.point}}
               </td>
-              <td>
-                {{team.gameState?.won}}
-              </td>
-              <td>
-                {{team.gameState?.lose}}
-              </td>
-              <td>
-                {{team.gameState?.draw}}
-              </td>
-              <td>
-                {{team.gameState?.played}}
-              </td>
-              <td>
-                {{team.goal?.goalCount}}
-              </td>
+
               <td style="width: 20%;">
-                <a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-									</span>
-                </a>
-                <a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-									</span>
-                </a>
-                <a href="#" class="table-link danger">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-									</span>
-                </a>
+
+
+                <a routerLink="/updateTeam/{{team.teamId}}"><button type="button"  class="btn btn-primary " >edit</button></a>
+
+
+                <button type="button" class="btn btn-danger" (click)="deleteTeam(team.teamId)">delete
+									</button>
+
               </td>
             </tr>
 
@@ -89,7 +67,15 @@
       </div>
     </div>
   </div>
+
 </div>
+
+
+
+
+
+
+
 
 
 

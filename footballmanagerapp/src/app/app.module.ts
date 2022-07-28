@@ -10,6 +10,7 @@ import { HomeComponent } from './components/home/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import {RouterModule} from "@angular/router";
 import {ReactiveFormsModule} from "@angular/forms";
+import {OrderModule} from "ngx-order-pipe";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     AppRoutingModule,
     HttpClientModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OrderModule
   ],
   providers: [
     HttpService

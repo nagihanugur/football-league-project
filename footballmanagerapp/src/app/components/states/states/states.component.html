@@ -1,1 +1,74 @@
-<p>states works!</p>
+
+<div class="container" >
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="main-box clearfix">
+        <div class="table-responsive">
+          <table class="table user-list">
+            <thead>
+            <tr>
+              <th><span>Team</span></th>
+              <th><span>Features</span></th>
+              <th class="text-center"><span>Power</span></th>
+              <th><span>Point</span></th>
+              <th><span>Won</span></th>
+              <th><span>Lose</span></th>
+              <th><span>Draw</span></th>
+              <th><span>Played</span></th>
+              <th><span>Goal</span></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let team of teams | orderBy:'point':true" >
+              <td>
+                <img src="{{team.emblem}}" alt="">
+                <a href="#" class="user-link">{{team.name}}</a>
+
+              </td>
+              <td>
+                {{team.features}}
+              </td>
+              <td class="text-center">
+                <span class="label label-default">{{team.power}}</span>
+              </td>
+              <td>
+                {{team.point}}
+              </td>
+              <td>
+                {{team.gameState?.won}}
+              </td>
+              <td>
+                {{team.gameState?.lose}}
+              </td>
+              <td>
+                {{team.gameState?.draw}}
+              </td>
+              <td>
+                {{team.gameState?.played}}
+              </td>
+              <td>
+                {{team.goal?.goalCount}}
+              </td>
+
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <ul class="pagination pull-right">
+          <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

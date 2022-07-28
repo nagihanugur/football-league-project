@@ -37,6 +37,18 @@ const routes: Routes = [
     loadChildren : () : Promise<any> =>
       import('./components/save-team/save-team.module').then(
         (m)=> m.SaveTeamModule),
+  },
+  {
+    path : 'updateTeam/:teamId',
+    loadChildren : () : Promise<any> =>
+      import('./components/update-team/update-team.module').then(
+        (m)=> m.UpdateTeamModule),
+  },
+  {
+    path : 'play',
+    loadChildren : () : Promise<any> =>
+      import('./components/play/play.module').then(
+        (m)=> m.PlayModule),
   }
 
 ];

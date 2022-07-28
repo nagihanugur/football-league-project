@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Team} from "../team";
 import {Goal} from "../goal";
+import {Match} from "../match";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,23 @@ export class HttpService {
 
   public deleteTeam(teamId : number) : Observable<void>{
     return this.http.delete<void>(`${this.apiServerUrl}/teams/delete/${teamId}`);
+  }
+
+  public updateTeam(team : Team, teamId : number) : Observable<Team>{
+    return this.http.put<Team>(`${this.apiServerUrl}/teams/update/${teamId}`,team);
+  }
+
+  public getAllMatches() : Observable<Match[]>{
+    return this.http.get<Match[]>(`${this.apiServerUrl}/matches`);
+  }
+  public createFixture() : Observable<Match[]>{
+    return this.http.get<Match[]>(`${this.apiServerUrl}/matches/create`)
+  }
+
+
+  public getMatch(matchId : number): Observable<Match>{
+
+    return this.http.get<Match>(`${this.apiServerUrl}/matches/${matchId}`);
   }
 
   public addGoal(goalId : number) : Observable<Goal>{

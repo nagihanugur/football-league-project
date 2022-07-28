@@ -27,28 +27,26 @@ public class Team {
     @Column(name = "point")
     private Integer point;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "goal_id")
-    private Goal goal;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+
+
+   /* @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "state_id" )
-    private GameState gameState;
+    private GameState gameState;*/
 
 
 
     public Team(){
 
     }
-    public Team(Integer teamId, String name, String emblem, String features, Float power, Integer point, Goal goal, GameState gameState){
+    public Team(Integer teamId, String name, String emblem, String features, Float power, Integer point){
         this.teamId = teamId;
         this.name = name;
         this.emblem = emblem;
         this.features = features;
         this.power = power;
         this.point = point;
-        this.goal = goal;
-        this.gameState = gameState;
+
     }
 
     public Integer getTeamId(){return teamId;}
@@ -87,17 +85,4 @@ public class Team {
         this.point = point;
     }
 
-    public Goal getGoal(){return goal;}
-
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-    }
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
 }

@@ -17,8 +17,6 @@ public class TeamMapper {
         dto.setEmblem(team.getEmblem());
         dto.setPower(team.getPower());
         dto.setPoint(team.getPoint());
-        dto.setGoal(team.getGoal());
-        dto.setGameState(team.getGameState());
         return dto;
     }
 
@@ -39,7 +37,6 @@ public class TeamMapper {
         team.setEmblem(dto.getEmblem());
         team.setPower(dto.getPower());
         team.setPoint(dto.getPoint());
-        team.setGoal(dto.getGoal());
 
         return team;
     }

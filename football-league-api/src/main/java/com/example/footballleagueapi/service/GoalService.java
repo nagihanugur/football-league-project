@@ -46,7 +46,7 @@ public class GoalService {
 
    }
 
-   public ServiceResult<GoalDto> getGoal(Integer goalId){
+   public ServiceResult<GoalDto> getGoalById(Integer goalId){
 
        ServiceResult<GoalDto> serviceResult = new ServiceResult<>();
 

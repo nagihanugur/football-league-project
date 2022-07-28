@@ -16,30 +16,43 @@ public class MatchController {
 
     private final MatchService matchService;
 
-    public MatchController(MatchService matchService){
+    public MatchController(MatchService matchService) {
         this.matchService = matchService;
     }
 
     @GetMapping
-    public ResponseEntity<List<MatchDto>> getAllMatchList(){
+    public ResponseEntity<List<MatchDto>> getAllMatchList() {
 
-        if (matchService.getAllMatches().isSuccess()){
+        if (matchService.getAllMatches().isSuccess()) {
             return new ResponseEntity<>(matchService.getAllMatches().getData(), HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/create")
+    public ResponseEntity<List<MatchDto>> createAllMatches(){
+        ServiceResult<List<MatchDto>> serviceResult = matchService.createMatches();
 
-   @PostMapping
-    public ResponseEntity<List<MatchDto>> getCreatingMatches(@RequestBody List<TeamDto> teamList){
-        ServiceResult<List<MatchDto>> allMatches = matchService.createAllMatches(teamList);
+        if (serviceResult.isSuccess()){
 
-        if(allMatches.isSuccess()){
-
-            return new ResponseEntity<>(matchService.createAllMatches(teamList).getData(), HttpStatus.OK);
-
+            return new ResponseEntity<>(matchService.createMatches().getData(), HttpStatus.OK);
         }
+        return ResponseEntity.badRequest().build();
 
+    }
+
+
+
+    @GetMapping("/{matchId}")
+    public ResponseEntity<MatchDto> getMatchById(@PathVariable Integer matchId){
+
+        ServiceResult<MatchDto> serviceResult = matchService.getMatchById(matchId);
+        if (serviceResult.isSuccess()){
+            return new ResponseEntity<>(matchService.getMatchById(matchId).getData(), HttpStatus.OK);
+        }
         return ResponseEntity.badRequest().build();
     }
+
+
 }
+

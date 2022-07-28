@@ -4,6 +4,7 @@ import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.dto.mapper.TeamMapper;
 import com.example.footballleagueapi.entity.Team;
+import com.example.footballleagueapi.repository.IGameStateRepository;
 import com.example.footballleagueapi.repository.IGoalRepository;
 import com.example.footballleagueapi.repository.ITeamRepository;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,11 @@ public class TeamService {
     private final IGoalRepository goalRepository;
 
 
-    public TeamService(ITeamRepository teamRepository, IGoalRepository goalRepository, GoalService goalService) {
+
+    public TeamService(ITeamRepository teamRepository, IGoalRepository goalRepository) {
         this.teamRepository = teamRepository;
         this.goalRepository = goalRepository;
+
 
         this.teamMapper = new TeamMapper();
 
@@ -51,21 +54,19 @@ public class TeamService {
         serviceResult.setSuccess(false);
         serviceResult.setErrorMessage("can't found team by id...");
         return serviceResult;
-
-
     }
 
     @Transactional
     public ServiceResult<TeamDto> saveTeam(TeamDto teamDto){
 
         ServiceResult<TeamDto> serviceResult = new ServiceResult<>();
+        Team team = teamRepository.findTeamByTeamId(teamDto.getTeamId());
 
-      if(teamRepository.findTeamByTeamId(teamDto.getTeamId()) == null){
-          if (teamDto.getName() == null || teamDto.getEmblem() == null || teamDto.getPower() ==null || teamDto.getFeatures() == null
-                  || goalRepository.existsById(teamDto.getGoal().getGoalId())){
+      if(team == null){
+          if (teamDto.getName() == null || teamDto.getEmblem() == null || teamDto.getPower() ==null || teamDto.getFeatures() == null){
 
               serviceResult.setSuccess(false);
-              serviceResult.setErrorMessage("Please fill all requirements!");
+              serviceResult.setErrorMessage("Please fill all requirements and don't entered goal id and state id that already exist! ");
               return serviceResult;
           }
 
@@ -80,6 +81,29 @@ public class TeamService {
 
 
 
+    }
+
+    public ServiceResult<TeamDto> updateTeam(TeamDto teamDto, Integer teamId){
+
+        Team team = teamRepository.findTeamByTeamId(teamId);
+        ServiceResult<TeamDto> serviceResult = new ServiceResult<>();
+
+       if (team != null){
+           team.setName(teamDto.getName());
+           team.setEmblem(teamDto.getEmblem());
+           team.setFeatures(teamDto.getFeatures());
+           team.setPoint(teamDto.getPoint());
+           team.setPower(teamDto.getPower());
+
+           Team  updatedTeam = teamRepository.save(team);
+           serviceResult.setData(teamMapper.toTeamDto(updatedTeam));
+           return serviceResult;
+
+       }
+
+       serviceResult.setSuccess(false);
+       serviceResult.setErrorMessage(" was not found team ");
+       return serviceResult;
     }
 
 

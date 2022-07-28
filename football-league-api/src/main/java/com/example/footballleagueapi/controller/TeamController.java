@@ -2,9 +2,7 @@ package com.example.footballleagueapi.controller;
 
 import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.TeamDto;
-import com.example.footballleagueapi.entity.Team;
 import com.example.footballleagueapi.service.TeamService;
-import org.apache.tomcat.util.http.HeaderUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +48,17 @@ public class TeamController {
         if (serviceResult.isSuccess()){
             return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
 
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping("/update/{teamId}")
+    public ResponseEntity<TeamDto> update(@RequestBody TeamDto teamDto, @PathVariable Integer teamId){
+        ServiceResult<TeamDto> serviceResult = teamService.updateTeam(teamDto, teamId);
+
+        if(serviceResult.isSuccess()){
+
+            return new ResponseEntity<>(serviceResult.getData(),HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
     }

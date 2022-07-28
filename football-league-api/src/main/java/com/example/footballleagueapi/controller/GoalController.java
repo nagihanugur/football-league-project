@@ -47,9 +47,9 @@ public class GoalController {
 
     @GetMapping("/{goalId}")
     public ResponseEntity<GoalDto> getGoalById(@PathVariable Integer goalId){
-        ServiceResult<GoalDto> serviceResult = goalService.getGoal(goalId);
+        ServiceResult<GoalDto> serviceResult = goalService.getGoalById(goalId);
         if (serviceResult.isSuccess()){
-            return new ResponseEntity<>(goalService.getGoal(goalId).getData(), HttpStatus.OK);
+            return new ResponseEntity<>(goalService.getGoalById(goalId).getData(), HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
 

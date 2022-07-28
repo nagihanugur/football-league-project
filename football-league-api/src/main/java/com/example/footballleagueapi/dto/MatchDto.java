@@ -1,5 +1,6 @@
 package com.example.footballleagueapi.dto;
 
+import com.example.footballleagueapi.entity.Goal;
 import com.example.footballleagueapi.entity.Match;
 import com.example.footballleagueapi.entity.Team;
 
@@ -13,12 +14,12 @@ public class MatchDto {
     private Team teamSecond;
     private Integer goalFt;
     private Integer goalSt;
-    private Date matchDate;
+    private String matchDate;
 
     public MatchDto(){
 
     }
-    public MatchDto(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Date matchDate){
+    public MatchDto(Integer matchId,Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, String matchDate){
 
         this.matchId = matchId;
         this.teamFirst = teamFirst;
@@ -78,11 +79,11 @@ public class MatchDto {
         this.goalSt = goalSt;
     }
 
-    public Date getMatchDate() {
+    public String getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(Date matchDate) {
+    public void setMatchDate(String matchDate) {
         this.matchDate = matchDate;
     }
 }

@@ -12,22 +12,20 @@ public class TeamDto {
     private String emblem;
     private Float power;
     private Integer point;
-    private Goal goal;
-    private GameState gameState;
+
 
     public TeamDto(){
 
     }
 
-    public TeamDto(Integer teamId, String name, String features, String emblem, Float power, Integer point, Goal goal, GameState gameState){
+    public TeamDto(Integer teamId, String name, String features, String emblem, Float power, Integer point){
         this.teamId = teamId;
         this.name = name;
         this.emblem = emblem;
         this.features = features;
         this.power = power;
         this.point = point;
-        this.goal = goal;
-        this.gameState = gameState;
+
     }
 
     public TeamDto(Team team){
@@ -37,8 +35,7 @@ public class TeamDto {
         this.emblem = team.getEmblem();
         this.power = team.getPower();
         this.point = team.getPoint();
-        this.goal = team.getGoal();
-        this.gameState = team.getGameState();
+
     }
 
     public Integer getTeamId() {
@@ -89,19 +86,4 @@ public class TeamDto {
         this.point = point;
     }
 
-    public Goal getGoal() {
-        return goal;
-    }
-
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-    }
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
 }

@@ -2,6 +2,7 @@ package com.example.footballleagueapi.entity;
 
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -10,35 +11,38 @@ import java.util.Date;
 public class Match {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @SequenceGenerator(name="jpaPkSeq", sequenceName="sequence_match", allocationSize=1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaPkSeq")
     @Column(name = "match_id")
     private Integer matchId;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_first")
     private Team teamFirst;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_second")
     private Team teamSecond;
 
-    @Column(name = "goal_ft", nullable = true)
+    @Column(name = "goal_ft")
     private Integer goalFt;
 
-    @Column(name = "goal_st", nullable = true)
+
+   @Column(name = "goal_st")
     private Integer goalSt;
 
 
     @Column(name = "match_date")
-    @Temporal(TemporalType.DATE)
-    private Date matchDate;
+   // @Temporal(TemporalType.DATE)
+    private String matchDate;
 
     public Match(){
 
     }
 
 
-    public Match(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Date  matchDate){
+    public Match(Integer  matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, String  matchDate){
         this.matchId = matchId;
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
@@ -48,7 +52,7 @@ public class Match {
 
     }
 
-    public Match( Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Date  matchDate){
+  /*  public Match( Team teamFirst, Team teamSecond, Goal goalFt, Goal goalSt, Date  matchDate){
 
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
@@ -56,13 +60,13 @@ public class Match {
         this.goalSt = goalSt;
         this.matchDate = matchDate;
 
-    }
+    }*/
 
-    public int getMatchId() {
+    public Integer  getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(int matchId) {
+    public void setMatchId(Integer  matchId) {
         this.matchId = matchId;
     }
 
@@ -82,27 +86,27 @@ public class Match {
         this.teamSecond = teamSecond;
     }
 
-    public int getGoalFt() {
+    public Integer getGoalFt() {
         return goalFt;
     }
 
-    public void setGoalFt(int goalFt) {
+    public void setGoalFt(Integer goalFt) {
         this.goalFt = goalFt;
     }
 
-    public int getGoalSt() {
+    public Integer getGoalSt() {
         return goalSt;
     }
 
-    public void setGoalSt(int goalSt) {
+    public void setGoalSt(Integer goalSt) {
         this.goalSt = goalSt;
     }
 
-    public Date getMatchDate() {
+    public String getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(Date matchDate) {
+    public void setMatchDate(String matchDate) {
         this.matchDate = matchDate;
     }
 }

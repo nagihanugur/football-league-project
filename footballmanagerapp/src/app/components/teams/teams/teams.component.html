@@ -1,8 +1,9 @@
 
 <div *ngIf="message" class="alert alert-success" role="alert">
-  <strong>Success! Team is deleted...</strong>
+  <strong>Success! Team  is deleted...</strong>
   <button (click)="removeMessage()" type="button" class="btn btn-light">X</button>
 </div>
+
 
 
 <div class="container">
@@ -54,6 +55,7 @@
 
             </tbody>
           </table>
+
         </div>
         <ul class="pagination pull-right">
           <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
@@ -66,9 +68,31 @@
         </ul>
       </div>
     </div>
+   <div class="row">
+     <div class="col-md-2">
+
+       <button  routerLink="/saveTeam" type="button" class="yan btn btn-success yan">Create Teams</button>
+
+
+     </div>
+     <div class="col-md-2">
+
+       <button  type="button" (click)="deleteAll()" class=" yan btn btn-danger">Delete All Teams</button>
+
+
+     </div>
+     <div class="col-md-2">
+
+       <button  type="button" (click)="createAllFixture()" class="yan btn btn-primary yan">Create Fixture</button>
+
+
+     </div>
+
+   </div>
   </div>
 
 </div>
+
 
 
 

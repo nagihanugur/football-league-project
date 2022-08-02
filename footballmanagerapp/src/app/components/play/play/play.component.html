@@ -1,4 +1,6 @@
-<div class="container mt-5">
+
+
+<div class="container mt-5" *ngIf="!isShow">
   <div class="row">
     <div *ngFor="let match of matches; index as i" class="card text-center col-md-6 mt-3 my-2 pd-3">
       <div class="card-header text-muted">
@@ -11,12 +13,25 @@
         </ul>
         <h6 class="card-title">{{match.goalFt}} - {{match.goalSt}}</h6>
 
-        <a  class="btn btn-primary" (click)="playGame(match.matchId)">Play Game!</a>
+        <a  class="btn btn-primary" (click)="playGame(match.matchId)" >Play Game!</a>
       </div>
       <div class="card-footer text-muted">
         {{match.matchDate}}
       </div>
+
     </div>
 
   </div>
 </div>
+<ng-container  *ngIf="isShow" >
+
+  <div class="alert alert-success"  role="alert">
+
+    <h4>Match Result</h4>
+    <p>{{match.teamFirst.name}} : {{match.goalFt}}  -  {{match.goalSt}} : {{match.teamSecond.name}} </p>
+    <button (click)="close()">Close</button>
+  </div>
+
+</ng-container>
+
+

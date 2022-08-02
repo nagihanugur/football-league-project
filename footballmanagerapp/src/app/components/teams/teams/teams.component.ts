@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Team} from "../../../team";
 import {HttpService} from "../../../services/http.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Match} from "../../../match";
 
 
 
@@ -13,6 +14,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class TeamsComponent implements OnInit {
 
   public teams: Team[] = [];
+  public matches : Match[]=[];
   message: Boolean = false;
 
 
@@ -41,7 +43,8 @@ export class TeamsComponent implements OnInit {
 
     this.httpService.deleteTeam(id).subscribe(
       () => {
-        console.log("Team id : " + id + " is deleted successfully")
+        console.log("Team id : " + id + " is deleted successfully");
+        this.getTeams();
       }
     );
     this.message = true
@@ -50,6 +53,26 @@ export class TeamsComponent implements OnInit {
 
   public removeMessage() {
     this.message = false;
+  }
+
+  public createAllFixture(){
+
+    this.httpService.createFixture().subscribe(
+      (response: Match []) => {
+        this.matches = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      });
+
+
+  }
+
+  public deleteAll(){
+    this.httpService.deleteAllTeam().subscribe(()=>{
+      this.getTeams();
+      }
+    );
   }
 
 

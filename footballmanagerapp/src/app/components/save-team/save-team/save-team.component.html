@@ -28,5 +28,5 @@
     <input type="number" class="form-control" formControlName="point"  placeholder="point">
   </div>
 
-  <button type="submit" class="btn btn-primary mt-3" [disabled]="teamForm.invalid" (click)="createTeam()">Submit</button>
+  <button routerLink="/teams" type="submit" class="btn btn-primary mt-3" [disabled]="teamForm.invalid" (click)="createTeam()">Submit</button>
 </form>

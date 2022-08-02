@@ -30,6 +30,9 @@ export class HttpService {
   public deleteTeam(teamId : number) : Observable<void>{
     return this.http.delete<void>(`${this.apiServerUrl}/teams/delete/${teamId}`);
   }
+  public deleteAllTeam():Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/teams/delete`)
+  }
 
   public updateTeam(team : Team, teamId : number) : Observable<Team>{
     return this.http.put<Team>(`${this.apiServerUrl}/teams/update/${teamId}`,team);
@@ -40,6 +43,14 @@ export class HttpService {
   }
   public createFixture() : Observable<Match[]>{
     return this.http.get<Match[]>(`${this.apiServerUrl}/matches/create`)
+  }
+
+  public updateMatch(match : Match) :Observable<Match>{
+    return this.http.put<Match>(`${this.apiServerUrl}/matches/update`,match)
+  }
+
+  public saveMatch(matchList : Match[]):Observable<Match[]>{
+    return this.http.post<Match[]>(`${this.apiServerUrl}/matches/save`,matchList)
   }
 
 

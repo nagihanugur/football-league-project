@@ -4,7 +4,6 @@ import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.dto.mapper.TeamMapper;
 import com.example.footballleagueapi.entity.Team;
-import com.example.footballleagueapi.repository.IGameStateRepository;
 import com.example.footballleagueapi.repository.IGoalRepository;
 import com.example.footballleagueapi.repository.ITeamRepository;
 import org.springframework.stereotype.Service;
@@ -126,6 +125,23 @@ public class TeamService {
 
         return serviceResult;
 
+    }
+
+    public ServiceResult<Void> deleteAllTeam(){
+
+        ServiceResult<Void> serviceResult = new ServiceResult<>();
+
+        List<Team> teamList = teamRepository.getAllByOrderByTeamId();
+
+        if (teamList.isEmpty()){
+            serviceResult.setSuccess(false);
+            serviceResult.setErrorMessage("were not found teams");
+            return serviceResult;
+        }
+
+        teamRepository.deleteAll(teamList);
+        serviceResult.setSuccess(true);
+        return serviceResult;
     }
 
 

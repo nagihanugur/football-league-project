@@ -1,28 +1,26 @@
 package com.example.footballleagueapi.entity;
 
 
+import com.example.footballleagueapi.dto.TeamDto;
+
 import javax.persistence.*;
-import java.io.Serial;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "matches")
 public class Match {
 
     @Id
-
     @SequenceGenerator(name="jpaPkSeq", sequenceName="sequence_match", allocationSize=1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaPkSeq")
     @Column(name = "match_id")
     private Integer matchId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_first")
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "team_first", referencedColumnName = "team_id")
     private Team teamFirst;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_second")
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "team_second", referencedColumnName = "team_id")
     private Team teamSecond;
 
     @Column(name = "goal_ft")
@@ -34,15 +32,24 @@ public class Match {
 
 
     @Column(name = "match_date")
-   // @Temporal(TemporalType.DATE)
+
     private String matchDate;
+
+    public Match(Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, String matchDate){
+        this.teamFirst = teamFirst;
+        this.teamSecond = teamSecond;
+        this.goalSt = goalSt;
+        this.goalFt = goalFt;
+        this.matchDate = matchDate;
+
+    }
 
     public Match(){
 
     }
 
 
-    public Match(Integer  matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, String  matchDate){
+    public Match(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, String  matchDate){
         this.matchId = matchId;
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
@@ -52,15 +59,7 @@ public class Match {
 
     }
 
-  /*  public Match( Team teamFirst, Team teamSecond, Goal goalFt, Goal goalSt, Date  matchDate){
 
-        this.teamFirst = teamFirst;
-        this.teamSecond = teamSecond;
-        this.goalFt = goalFt;
-        this.goalSt = goalSt;
-        this.matchDate = matchDate;
-
-    }*/
 
     public Integer  getMatchId() {
         return matchId;

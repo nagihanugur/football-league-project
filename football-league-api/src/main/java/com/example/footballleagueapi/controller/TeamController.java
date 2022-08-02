@@ -67,4 +67,9 @@ public class TeamController {
     public ResponseEntity<Void> deleteTeamById(@PathVariable Integer teamId){
         return new ResponseEntity<>(teamService.deleteTeamById(teamId).getData(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteAllTeam(){
+        return new ResponseEntity<>(teamService.deleteAllTeam().getData(), HttpStatus.OK);
+    }
 }

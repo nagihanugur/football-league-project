@@ -8,12 +8,18 @@ import java.util.List;
 
 public class MatchMapper {
 
+    private final TeamMapper teamMapper;
+
+    public MatchMapper() {
+        this.teamMapper = new TeamMapper();
+    }
+
     public MatchDto toMatchDto(Match match){
 
-        MatchDto matchDto = new MatchDto();
+        MatchDto matchDto = new MatchDto(teamMapper);
         matchDto.setMatchId(match.getMatchId());
-        matchDto.setTeamFirst(match.getTeamFirst());
-        matchDto.setTeamSecond(match.getTeamSecond());
+        matchDto.setTeamFirst(teamMapper.toTeamDto(match.getTeamFirst()));
+        matchDto.setTeamSecond(teamMapper.toTeamDto(match.getTeamSecond()));
         matchDto.setGoalFt(match.getGoalFt());
         matchDto.setGoalSt(match.getGoalSt());
         matchDto.setMatchDate(match.getMatchDate());
@@ -22,11 +28,12 @@ public class MatchMapper {
     }
 
     public Match toMatch(MatchDto dto){
+
         Match match = new Match();
 
         match.setMatchId(dto.getMatchId());
-        match.setTeamFirst(dto.getTeamFirst());
-        match.setTeamSecond(dto.getTeamSecond());
+        match.setTeamFirst(teamMapper.toTeam(dto.getTeamFirst()));
+        match.setTeamSecond(teamMapper.toTeam(dto.getTeamSecond()));
         match.setGoalFt(dto.getGoalFt());
         match.setGoalSt(dto.getGoalSt());
         match.setMatchDate(dto.getMatchDate());

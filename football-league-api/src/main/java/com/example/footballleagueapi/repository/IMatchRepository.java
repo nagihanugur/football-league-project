@@ -12,6 +12,4 @@ public interface IMatchRepository extends CrudRepository<Match,Integer> {
 
     List<Match> getAllByOrderByMatchId();
 
-    Match findMatchByTeamFirst(Integer id);
-    Match findMatchByTeamSecond(Integer id);
 }

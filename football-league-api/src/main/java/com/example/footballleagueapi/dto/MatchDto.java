@@ -1,42 +1,50 @@
 package com.example.footballleagueapi.dto;
 
-import com.example.footballleagueapi.entity.Goal;
+import com.example.footballleagueapi.dto.mapper.TeamMapper;
 import com.example.footballleagueapi.entity.Match;
 import com.example.footballleagueapi.entity.Team;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class MatchDto {
 
     private Integer matchId;
-    private Team teamFirst;
-    private Team teamSecond;
+    private TeamDto teamFirst;
+    private TeamDto teamSecond;
     private Integer goalFt;
     private Integer goalSt;
     private String matchDate;
 
-    public MatchDto(){
+    private TeamMapper teamMapper;
 
+    public MatchDto(){}
+
+    public MatchDto(TeamMapper teamMapper){
+
+        this.teamMapper = teamMapper;
     }
-    public MatchDto(Integer matchId,Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, String matchDate){
+
+    public MatchDto(Integer matchId,TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, String matchDate){
 
         this.matchId = matchId;
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
         this.goalFt = goalFt;
         this.goalSt = goalSt;
+        this.matchDate = matchDate;
+
 
     }
 
     public MatchDto(Match match){
         this.matchId = match.getMatchId();
-        this.teamFirst = match.getTeamFirst();
-        this.teamSecond = match.getTeamSecond();
+        this.teamFirst = teamMapper.toTeamDto(match.getTeamFirst());
+        this.teamSecond = teamMapper.toTeamDto(match.getTeamSecond());
         this.goalFt = match.getGoalFt();
         this.goalSt = match.getGoalSt();
         this.matchDate = match.getMatchDate();
 
+    }
+
+    public MatchDto(TeamDto toTeamDto, TeamDto toTeamDto1, int i, int i1, String s) {
     }
 
     public Integer getMatchId() {
@@ -47,19 +55,19 @@ public class MatchDto {
         this.matchId = matchId;
     }
 
-    public Team getTeamFirst() {
+    public TeamDto getTeamFirst() {
         return teamFirst;
     }
 
-    public void setTeamFirst(Team teamFirst) {
+    public void setTeamFirst(TeamDto teamFirst) {
         this.teamFirst = teamFirst;
     }
 
-    public Team getTeamSecond() {
+    public TeamDto getTeamSecond() {
         return teamSecond;
     }
 
-    public void setTeamSecond(Team teamSecond) {
+    public void setTeamSecond(TeamDto teamSecond) {
         this.teamSecond = teamSecond;
     }
 

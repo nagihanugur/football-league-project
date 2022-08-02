@@ -51,9 +51,9 @@ public class Team {
 
     public Integer getTeamId(){return teamId;}
 
-    public void setTeamId(Integer id){
+    public void setTeamId(Integer teamId){
         this.teamId = teamId;
-    };
+    }
 
     public String getName(){return name;}
 

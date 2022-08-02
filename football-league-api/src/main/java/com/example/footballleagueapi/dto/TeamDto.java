@@ -1,7 +1,4 @@
 package com.example.footballleagueapi.dto;
-
-import com.example.footballleagueapi.entity.GameState;
-import com.example.footballleagueapi.entity.Goal;
 import com.example.footballleagueapi.entity.Team;
 
 public class TeamDto {
@@ -39,6 +36,7 @@ public class TeamDto {
     }
 
     public Integer getTeamId() {
+
         return teamId;
     }
 

@@ -30,13 +30,17 @@ public class MatchService {
         this.teamMapper = new TeamMapper();
     }
 
-   public ServiceResult<List<MatchDto>> getAllMatches(){
+    public ServiceResult<List<MatchDto>> getAllMatches(){
 
         List<Match> matches = matchRepository.getAllByOrderByMatchId();
-        List<MatchDto> matchDtoList = matchMapper.toMatchDtoList(matches);
+        List<MatchDto> matchDtos = matchMapper.toMatchDtoList(matches);
 
-        return new ServiceResult<List<MatchDto>>(matchDtoList);
+
+        return new ServiceResult<List<MatchDto>>(matchDtos);
     }
+
+
+
 
     public ServiceResult<MatchDto> getMatchById(Integer id){
         ServiceResult<MatchDto> serviceResult = new ServiceResult<>();
@@ -45,7 +49,6 @@ public class MatchService {
 
         if (match.isPresent()){
             serviceResult.setData(matchMapper.toMatchDto(match.get()));
-
             return serviceResult;
         }
         serviceResult.setSuccess(false);
@@ -53,7 +56,98 @@ public class MatchService {
         return serviceResult;
     }
 
+    public ServiceResult<List<MatchDto>> saveMatch(List<MatchDto> matchDtoList){
 
+
+        ServiceResult<List<MatchDto>>serviceResult = new ServiceResult<>();
+        List<Match> matchList = new ArrayList<>();
+
+        for (MatchDto matchDto: matchDtoList
+             ) {
+          Match match = matchRepository.save(matchMapper.toMatch(matchDto));
+          matchList.add(match);
+        }
+        serviceResult.setData(matchMapper.toMatchDtoList(matchList));
+
+        return serviceResult;
+    }
+
+    public ServiceResult<MatchDto> updateMatch(MatchDto matchDto){
+
+        Optional<Match> match = matchRepository.findById(matchDto.getMatchId());
+
+
+        ServiceResult<MatchDto> serviceResult = new ServiceResult<>();
+        if(match.isPresent()){
+
+          match.get().setTeamFirst(teamMapper.toTeam(matchDto.getTeamFirst()));
+           match.get().setTeamSecond(teamMapper.toTeam(matchDto.getTeamSecond()));
+           match.get().setGoalFt(matchDto.getGoalFt());
+           match.get().setGoalSt(matchDto.getGoalSt());
+
+            Match updatedMatch =  matchRepository.save(match.get());
+
+            serviceResult.setData(matchMapper.toMatchDto(updatedMatch));
+
+            return serviceResult;
+
+        }else{
+
+            matchRepository.save(match.get());
+            serviceResult.setData(matchMapper.toMatchDto(match.get()));
+
+        }
+        return serviceResult;
+    }
+
+
+//CREATE MATCH
+
+   public ServiceResult<List<MatchDto>> createMatches(){
+
+        ServiceResult<List<MatchDto>> serviceResult = new ServiceResult<>();
+
+        List<Team> teams = teamRepository.getAllByOrderByTeamId();
+        teamMapper.toTeamDtoList(teams);
+        List<Match> matchList = new ArrayList<>();
+
+        int weekCount = teams.size()-1;
+        int matchCountPerWeek = teams.size()/2;
+
+         for(int i=0; i < weekCount; i++){
+
+             for (int j = 0; j < matchCountPerWeek; j++){
+
+                 int firstIndex = j;
+                 int secondIndex = (teams.size()-1) - j;
+
+                 Match match = (new Match(teams.get(firstIndex), teams.get(secondIndex),0,0,"Week :"+(i+1)));
+                 Match match2 = (new Match(teams.get(secondIndex), teams.get(firstIndex),0,0,"Week :"+(i+ teams.size())));
+
+                 matchList.add(match);
+                 matchList.add(match2);
+                 matchRepository.save(match);
+                 matchRepository.save(match2);
+
+             }
+             List<Team> tempList = new ArrayList<>();
+             tempList.add(teams.get(0));
+             tempList.add(teams.get(teams.size()-1));
+
+             for (int k = 1; k < teams.size() - 1; k++){  // aradaki takımlar eklendi
+                 tempList.add(teams.get(k));
+             }
+             teams = tempList;
+         }
+
+         return new ServiceResult<List<MatchDto>>(matchMapper.toMatchDtoList(matchList));
+
+    }
+
+
+
+
+/*
     public ServiceResult<List<MatchDto>> createMatches(){
 
         List<Team> teamList = teamRepository.getAllByOrderByTeamId();
@@ -74,9 +168,11 @@ public class MatchService {
                 matchList.add(firstMatch);
                 matchRepository.save(firstMatch);
                 teamList.remove(teamList.get(0));
-*/
+
+
         for(int i = 1; i< teamList.size(); i++) {
-           // Collections.shuffle(teamList);
+
+            Collections.shuffle(teamList);
 
             for (int j = 0; j < teamList.size() / 2; j++) {
 
@@ -99,6 +195,8 @@ public class MatchService {
 
 
     }
+
+    */
 
    /* public ServiceResult<List<MatchDto>> createAllMatches(List<TeamDto> teamDtoList){
         List<Match> matchList = new ArrayList<>();
@@ -155,11 +253,10 @@ public class MatchService {
 
                 int firstTeam = j;
                 int secondTeam = (teamDtoList.size() -1) - j;
-                Date firstTime = new Date();
-                Date secondTime = new Date();
 
-                Match match = (new Match(teamMapper.toTeam(teamDtoList.get(firstTeam)), teamMapper.toTeam(teamDtoList.get(secondTeam)), null, null, firstTime));
-                Match match2 = (new Match(teamMapper.toTeam(teamDtoList.get(secondTeam)), teamMapper.toTeam(teamDtoList.get(firstTeam)),null,null, secondTime));
+
+                Match match = (new Match(teamMapper.toTeam(teamDtoList.get(firstTeam)), teamMapper.toTeam(teamDtoList.get(secondTeam)), 0, 0, null));
+                Match match2 = (new Match(teamMapper.toTeam(teamDtoList.get(secondTeam)), teamMapper.toTeam(teamDtoList.get(firstTeam)),0,0, null));
                 if (getAllMatches().getData().contains(match) || getAllMatches().getData().contains(match2)) {
                     serviceResult.setSuccess(false);
                     serviceResult.setErrorMessage("This match is already exist!");

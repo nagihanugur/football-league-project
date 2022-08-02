@@ -16,12 +16,11 @@ export class UpdateTeamComponent implements OnInit {
   constructor(private httpService : HttpService, private fb : FormBuilder, private router : ActivatedRoute) { }
 
 
-
   ngOnInit(): void {
 
    this.httpService.getTeamById(this.router.snapshot.params['teamId']).subscribe(
      result=>{
-       console.log(result);
+
        this.updateForm = this.fb.group({
 
          name : result['name'],
@@ -32,16 +31,15 @@ export class UpdateTeamComponent implements OnInit {
        });
      }
    )
-
   }
-
   updateTeam(){
 
     this.httpService.updateTeam(this.updateForm.value, this.router.snapshot.params['teamId']).subscribe(result=>{
       console.log(result);
+      this.message = true;
     });
 
-    this.message = true;
+
   }
 
   removeMessage(){

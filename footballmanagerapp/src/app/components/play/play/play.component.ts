@@ -119,12 +119,10 @@ export class PlayComponent implements OnInit {
         this.match.teamSecond.power -= 10;
 
         this.httpService.updateMatch(this.match).subscribe(res =>{
-          this.updatedMatches.push(res);
+
           this.isShow = true;
-          console.log(this.matches);
+
         });
-
-
 
       }
       if (this.match.goalFt < this.match.goalSt) {
@@ -134,11 +132,10 @@ export class PlayComponent implements OnInit {
         this.match.teamSecond.point += 3;
 
         this.httpService.updateMatch(this.match).subscribe(res =>{
-          this.updatedMatches.push(res);
-          this.isShow = true;
-          console.log(this.matches);
-        });
 
+          this.isShow = true;
+
+        });
 
       }
       if (this.match.goalFt == this.match.goalSt) {
@@ -147,13 +144,11 @@ export class PlayComponent implements OnInit {
         this.match.teamSecond.point += 1;
 
         this.httpService.updateMatch(this.match).subscribe(res =>{
-          this.updatedMatches.push(res);
+
+
           this.isShow = true;
-          console.log(this.matches);
 
         });
-
-
 
       }
     });

@@ -1,11 +1,7 @@
-
 <div *ngIf="message" class="alert alert-success" role="alert">
-  <strong>Success! Team  is deleted...</strong>
+  <strong>Success! Team is deleted...</strong>
   <button (click)="removeMessage()" type="button" class="btn btn-light">X</button>
 </div>
-
-
-
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
@@ -18,9 +14,6 @@
               <th><span>Features</span></th>
               <th class="text-center"><span>Power</span></th>
               <th><span>Point</span></th>
-
-
-
               <th></th>
             </tr>
             </thead>
@@ -43,12 +36,12 @@
 
               <td style="width: 20%;">
 
-
-                <a routerLink="/updateTeam/{{team.teamId}}"><button type="button"  class="btn btn-primary " >edit</button></a>
-
+                <a routerLink="/updateTeam/{{team.teamId}}">
+                  <button type="button" class="btn btn-primary ">edit</button>
+                </a>
 
                 <button type="button" class="btn btn-danger" (click)="deleteTeam(team.teamId)">delete
-									</button>
+                </button>
 
               </td>
             </tr>
@@ -68,27 +61,27 @@
         </ul>
       </div>
     </div>
-   <div class="row">
-     <div class="col-md-2">
+    <div class="row">
+      <div class="col-md-2">
 
-       <button  routerLink="/saveTeam" type="button" class="yan btn btn-success yan">Create Teams</button>
-
-
-     </div>
-     <div class="col-md-2">
-
-       <button  type="button" (click)="deleteAll()" class=" yan btn btn-danger">Delete All Teams</button>
+        <button routerLink="/saveTeam" type="button" class="yan btn btn-success yan">Create Teams</button>
 
 
-     </div>
-     <div class="col-md-2">
+      </div>
+      <div class="col-md-2">
 
-       <button  type="button" (click)="createAllFixture()" class="yan btn btn-primary yan">Create Fixture</button>
+        <button type="button" (click)="deleteAll()" class=" yan btn btn-danger">Delete All Teams</button>
 
 
-     </div>
+      </div>
+      <div class="col-md-2">
 
-   </div>
+        <button type="button" (click)="createAllFixture()" class="yan btn btn-primary yan">Create Fixture</button>
+
+
+      </div>
+
+    </div>
   </div>
 
 </div>

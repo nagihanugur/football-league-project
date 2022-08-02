@@ -3,7 +3,7 @@
 <strong>Success! Team updated...</strong>
   <button (click)="removeMessage()" type="button" class="btn btn-light">X</button>
 </ng-container>
-<form [formGroup]="updateForm" (ngSubmit)="updateTeam()"  >
+<form *ngIf="updateForm" [formGroup]="updateForm" (ngSubmit)="updateTeam()" >
   <div class="form-group">
     <label >Team Name</label>
     <input type="text" class="form-control" formControlName="name"   placeholder="Enter team name">
@@ -28,6 +28,6 @@
   </div>
 
 
-  <button routerLink="/teams" type="submit" class="btn btn-primary mt-3" [disabled]="updateForm.invalid" (click)="updateTeam()" >Update</button>
+  <button routerLink="/teams" type="submit" class="btn btn-primary mt-3" [disabled]="updateForm.invalid" (click)="updateTeam()"  >Update</button>
 </form>
 

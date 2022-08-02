@@ -33,9 +33,9 @@ public class Match {
 
     @Column(name = "match_date")
 
-    private String matchDate;
+    private Integer matchDate;
 
-    public Match(Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, String matchDate){
+    public Match(Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Integer matchDate){
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
         this.goalSt = goalSt;
@@ -49,7 +49,7 @@ public class Match {
     }
 
 
-    public Match(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, String  matchDate){
+    public Match(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Integer  matchDate){
         this.matchId = matchId;
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
@@ -101,11 +101,11 @@ public class Match {
         this.goalSt = goalSt;
     }
 
-    public String getMatchDate() {
+    public Integer getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(String matchDate) {
+    public void setMatchDate(Integer matchDate) {
         this.matchDate = matchDate;
     }
 }

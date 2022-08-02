@@ -11,7 +11,7 @@ public class MatchDto {
     private TeamDto teamSecond;
     private Integer goalFt;
     private Integer goalSt;
-    private String matchDate;
+    private Integer matchDate;
 
     private TeamMapper teamMapper;
 
@@ -22,7 +22,7 @@ public class MatchDto {
         this.teamMapper = teamMapper;
     }
 
-    public MatchDto(Integer matchId,TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, String matchDate){
+    public MatchDto(Integer matchId,TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, Integer matchDate){
 
         this.matchId = matchId;
         this.teamFirst = teamFirst;
@@ -44,7 +44,7 @@ public class MatchDto {
 
     }
 
-    public MatchDto(TeamDto toTeamDto, TeamDto toTeamDto1, int i, int i1, String s) {
+    public MatchDto(TeamDto toTeamDto, TeamDto toTeamDto1, int i, int i1, Integer s) {
     }
 
     public Integer getMatchId() {
@@ -87,11 +87,11 @@ public class MatchDto {
         this.goalSt = goalSt;
     }
 
-    public String getMatchDate() {
+    public Integer getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(String matchDate) {
+    public void setMatchDate(Integer matchDate) {
         this.matchDate = matchDate;
     }
 }

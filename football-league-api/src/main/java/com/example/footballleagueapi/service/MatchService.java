@@ -121,8 +121,8 @@ public class MatchService {
                  int firstIndex = j;
                  int secondIndex = (teams.size()-1) - j;
 
-                 Match match = (new Match(teams.get(firstIndex), teams.get(secondIndex),0,0,"Week :"+(i+1)));
-                 Match match2 = (new Match(teams.get(secondIndex), teams.get(firstIndex),0,0,"Week :"+(i+ teams.size())));
+                 Match match = (new Match(teams.get(firstIndex), teams.get(secondIndex),0,0,i+1));
+                 Match match2 = (new Match(teams.get(secondIndex), teams.get(firstIndex),0,0,i+ teams.size()));
 
                  matchList.add(match);
                  matchList.add(match2);

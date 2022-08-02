@@ -84,17 +84,17 @@ public class TeamService {
 
     public ServiceResult<TeamDto> updateTeam(TeamDto teamDto, Integer teamId){
 
-        Team team = teamRepository.findTeamByTeamId(teamId);
+        Optional<Team> team = teamRepository.findById(teamId);
         ServiceResult<TeamDto> serviceResult = new ServiceResult<>();
 
-       if (team != null){
-           team.setName(teamDto.getName());
-           team.setEmblem(teamDto.getEmblem());
-           team.setFeatures(teamDto.getFeatures());
-           team.setPoint(teamDto.getPoint());
-           team.setPower(teamDto.getPower());
+       if (team.isPresent()){
+           team.get().setName(teamDto.getName());
+           team.get().setEmblem(teamDto.getEmblem());
+           team.get().setFeatures(teamDto.getFeatures());
+           team.get().setPoint(teamDto.getPoint());
+           team.get().setPower(teamDto.getPower());
 
-           Team  updatedTeam = teamRepository.save(team);
+           Team  updatedTeam = teamRepository.save(team.get());
            serviceResult.setData(teamMapper.toTeamDto(updatedTeam));
            return serviceResult;
 

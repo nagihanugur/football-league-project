@@ -33,7 +33,7 @@ public class MatchController {
         ServiceResult<List<MatchDto>> serviceResult = matchService.getAllMatches();
         if (serviceResult.isSuccess()){
 
-            return new ResponseEntity<List<MatchDto>>(matchService.getAllMatches().getData(), HttpStatus.OK);
+            return new ResponseEntity<List<MatchDto>>(serviceResult.getData(), HttpStatus.OK);
         }
 
         return ResponseEntity.badRequest().build();
@@ -85,7 +85,7 @@ public class MatchController {
 
         ServiceResult<MatchDto> serviceResult = matchService.getMatchById(matchId);
         if (serviceResult.isSuccess()){
-            return new ResponseEntity<>(matchService.getMatchById(matchId).getData(), HttpStatus.OK);
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
     }

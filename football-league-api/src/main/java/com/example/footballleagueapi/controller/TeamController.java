@@ -21,10 +21,11 @@ public class TeamController {
 
     @GetMapping
     public ResponseEntity<List<TeamDto>> getAllTeams(){
+        ServiceResult<List<TeamDto>> serviceResult = teamService.getAll();
 
-        if(teamService.getAll().isSuccess()){
+        if(serviceResult.isSuccess()){
 
-            return new ResponseEntity<>(teamService.getAll().getData(), HttpStatus.OK);
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
         }
 
         return ResponseEntity.badRequest().build();
@@ -36,7 +37,7 @@ public class TeamController {
 
         ServiceResult<TeamDto> serviceResult = teamService.getTeamById(teamId);
         if (serviceResult.isSuccess()){
-            return new ResponseEntity<>(teamService.getTeamById(teamId).getData(), HttpStatus.OK);
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
     }

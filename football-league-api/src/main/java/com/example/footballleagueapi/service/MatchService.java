@@ -1,12 +1,16 @@
 package com.example.footballleagueapi.service;
 
 import com.example.footballleagueapi.common.ServiceResult;
+import com.example.footballleagueapi.dto.LeagueDto;
 import com.example.footballleagueapi.dto.MatchDto;
 import com.example.footballleagueapi.dto.TeamDto;
+import com.example.footballleagueapi.dto.mapper.LeagueMapper;
 import com.example.footballleagueapi.dto.mapper.MatchMapper;
 import com.example.footballleagueapi.dto.mapper.TeamMapper;
+import com.example.footballleagueapi.entity.League;
 import com.example.footballleagueapi.entity.Match;
 import com.example.footballleagueapi.entity.Team;
+import com.example.footballleagueapi.repository.ILeagueRepository;
 import com.example.footballleagueapi.repository.IMatchRepository;
 import com.example.footballleagueapi.repository.ITeamRepository;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,8 @@ public class MatchService {
     private final TeamMapper teamMapper;
     private final TeamService teamService;
     private final ITeamRepository teamRepository;
+
+
 
     public MatchService(IMatchRepository matchRepository, TeamService teamService, ITeamRepository teamRepository){
         this.matchRepository = matchRepository;
@@ -39,7 +45,23 @@ public class MatchService {
         return new ServiceResult<List<MatchDto>>(matchDtos);
     }
 
+    public ServiceResult<Void> deleteAllMatches(){
 
+        ServiceResult<Void> serviceResult = new ServiceResult<>();
+
+        List<Match> matchList = matchRepository.getAllByOrderByMatchId();
+
+        if (matchList.isEmpty()){
+            serviceResult.setSuccess(false);
+            serviceResult.setErrorMessage("were not fount matches");
+            return serviceResult;
+        }
+
+        matchRepository.deleteAll(matchList);
+        serviceResult.setSuccess(true);
+        return serviceResult;
+
+    }
 
 
     public ServiceResult<MatchDto> getMatchById(Integer id){
@@ -109,6 +131,8 @@ public class MatchService {
 
         List<Team> teams = teamRepository.getAllByOrderByTeamId();
         teamMapper.toTeamDtoList(teams);
+
+
         List<Match> matchList = new ArrayList<>();
 
         int weekCount = teams.size()-1;
@@ -142,6 +166,43 @@ public class MatchService {
 
          return new ServiceResult<List<MatchDto>>(matchMapper.toMatchDtoList(matchList));
 
+    }
+
+    public ServiceResult<List<MatchDto>> createNewMatches(List<TeamDto> teamDtoList){
+
+
+        List<Match> matchList = new ArrayList<>();
+
+
+        int weekCount = teamDtoList.size()-1;
+        int matchCountPerWeek = teamDtoList.size()/2;
+
+        for(int i=0; i < weekCount; i++){
+
+            for (int j = 0; j < matchCountPerWeek; j++){
+
+                int firstIndex = j;
+                int secondIndex = (teamDtoList.size()-1) - j;
+
+             /*   Match match = new Match(teamMapper.toTeam(teamDtoList.get(firstIndex)), teamMapper.toTeam(teamDtoList.get(secondIndex)),0, 0,i+1);
+
+
+                matchList.add(match);
+
+                matchRepository.save(match);*/
+
+            }
+            List<Team> tempList = new ArrayList<>();
+            tempList.add(teamMapper.toTeam(teamDtoList.get(0)));
+            tempList.add(teamMapper.toTeam(teamDtoList.get(teamDtoList.size()-1)));
+
+            for (int k = 1; k < teamDtoList.size() - 1; k++){  // aradaki takımlar eklendi
+                tempList.add(teamMapper.toTeam(teamDtoList.get(k)));
+            }
+            teamDtoList = teamMapper.toTeamDtoList(tempList);
+        }
+
+        return new ServiceResult<List<MatchDto>>(matchMapper.toMatchDtoList(matchList));
     }
 
 

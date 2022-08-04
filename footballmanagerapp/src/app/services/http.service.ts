@@ -3,8 +3,8 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Team} from "../team";
-import {Goal} from "../goal";
 import {Match} from "../match";
+import {League} from "../League";
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +44,9 @@ export class HttpService {
   public createFixture() : Observable<Match[]>{
     return this.http.get<Match[]>(`${this.apiServerUrl}/matches/create`)
   }
+  public createNewFixture(teamList : Team[]) : Observable<Match[]>{
+    return this.http.post<Match[]>(`${this.apiServerUrl}/matches/createFix`,teamList)
+  }
 
   public updateMatch(match : Match) :Observable<Match>{
     return this.http.put<Match>(`${this.apiServerUrl}/matches/update`,match)
@@ -59,8 +62,14 @@ export class HttpService {
     return this.http.get<Match>(`${this.apiServerUrl}/matches/${matchId}`);
   }
 
-  public addGoal(goalId : number) : Observable<Goal>{
-
-    return this.http.post<Goal>(`${this.apiServerUrl}/teams/goal`, goalId);
+  public saveLeague(league : League):Observable<League>{
+    return this.http.post<League>(`${this.apiServerUrl}/leagues/save`,league)
   }
+
+  public getAllLeague():Observable<League[]>{
+    return this.http.get<League[]>(`${this.apiServerUrl}/leagues`)
+  }
+
+
+
 }

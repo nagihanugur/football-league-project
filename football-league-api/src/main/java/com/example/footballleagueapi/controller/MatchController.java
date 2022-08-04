@@ -1,7 +1,9 @@
 package com.example.footballleagueapi.controller;
 
 import com.example.footballleagueapi.common.ServiceResult;
+import com.example.footballleagueapi.dto.LeagueDto;
 import com.example.footballleagueapi.dto.MatchDto;
+import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.entity.Match;
 import com.example.footballleagueapi.entity.Team;
 import com.example.footballleagueapi.repository.ITeamRepository;
@@ -45,6 +47,19 @@ public class MatchController {
     public ResponseEntity<List<MatchDto>> createAllMatches(){
 
         ServiceResult<List<MatchDto>> serviceResult = matchService.createMatches();
+
+        if (serviceResult.isSuccess()){
+
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
+        }
+        return ResponseEntity.badRequest().build();
+
+    }
+
+    @PostMapping("/createFix")
+    public ResponseEntity<List<MatchDto>> createAllMatches(@RequestBody List<TeamDto> TeamDtoList ){
+
+        ServiceResult<List<MatchDto>> serviceResult = matchService.createNewMatches(TeamDtoList);
 
         if (serviceResult.isSuccess()){
 

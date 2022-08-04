@@ -7,7 +7,9 @@ import javax.persistence.*;
 public class GameState {
 
     @Id
-    //@GeneratedValue(strategy= GenerationType.TABLE)
+  //  @SequenceGenerator(name="jpaStateSeq", sequenceName="stateseq", allocationSize=1, initialValue = 1)
+   // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaStateSeq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "state_id")
     private Integer stateId;
 

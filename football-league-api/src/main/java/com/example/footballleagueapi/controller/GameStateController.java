@@ -1,6 +1,7 @@
 package com.example.footballleagueapi.controller;
 
 
+import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.GameStateDto;
 import com.example.footballleagueapi.service.GameStateService;
 import org.springframework.http.HttpStatus;
@@ -22,24 +23,52 @@ public class GameStateController {
 
     @GetMapping
     public ResponseEntity<List<GameStateDto>> getStates(){
+        ServiceResult<List<GameStateDto>> serviceResult = gameStateService.getAllState();
 
-        if(gameStateService.getAllState().isSuccess()){
+        if(serviceResult.isSuccess()){
 
-            return new ResponseEntity<>(gameStateService.getAllState().getData(), HttpStatus.OK);
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
 
         }
 
         return ResponseEntity.badRequest().header(gameStateService.getAllState().getErrorMessage()).build();
     }
 
-    @PostMapping
-    public ResponseEntity<GameStateDto> saveState(GameStateDto dto){
+    @GetMapping("/{state_id}")
+    public ResponseEntity<GameStateDto> getStateById(@PathVariable Integer state_id){
 
-        if (gameStateService.addState(dto).isSuccess()){
-            return new ResponseEntity<>(gameStateService.addState(dto).getData(), HttpStatus.OK);
+        ServiceResult<GameStateDto> serviceResult = gameStateService.getStateById(state_id);
+        if (serviceResult.isSuccess()){
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<GameStateDto> saveState(@RequestBody GameStateDto gameStateDto){
+
+        ServiceResult<GameStateDto> serviceResult = gameStateService.addState(gameStateDto);
+
+        if (serviceResult.isSuccess()){
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
         }
 
         return ResponseEntity.badRequest().build();
 
     }
+
+    @PutMapping
+    public ResponseEntity<GameStateDto> updateState(@RequestBody GameStateDto gameStateDto){
+
+        ServiceResult<GameStateDto> serviceResult = gameStateService.addState(gameStateDto);
+
+        if (serviceResult.isSuccess()){
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
+        }
+
+        return ResponseEntity.badRequest().build();
+
+    }
+
+
 }

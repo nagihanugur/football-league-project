@@ -10,7 +10,9 @@ public class MatchMapper {
 
     private final TeamMapper teamMapper;
 
+
     public MatchMapper() {
+
         this.teamMapper = new TeamMapper();
     }
 
@@ -23,6 +25,7 @@ public class MatchMapper {
         matchDto.setGoalFt(match.getGoalFt());
         matchDto.setGoalSt(match.getGoalSt());
         matchDto.setMatchDate(match.getMatchDate());
+
 
         return matchDto;
     }
@@ -38,6 +41,7 @@ public class MatchMapper {
         match.setGoalSt(dto.getGoalSt());
         match.setMatchDate(dto.getMatchDate());
 
+
         return match;
     }
 
@@ -47,5 +51,13 @@ public class MatchMapper {
         matchList.forEach(match -> dtos.add(toMatchDto(match)));
 
         return dtos;
+    }
+
+    public List<Match> toMatchList(List<MatchDto> matchDtoList){
+
+        List<Match> matches = new ArrayList<>();
+        matchDtoList.forEach(matchDto -> matches.add(toMatch(matchDto)));
+
+        return matches;
     }
 }

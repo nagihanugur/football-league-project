@@ -1,8 +1,5 @@
 package com.example.footballleagueapi.entity;
 
-
-import com.example.footballleagueapi.dto.TeamDto;
-
 import javax.persistence.*;
 
 @Entity
@@ -23,16 +20,14 @@ public class Match {
     @JoinColumn(name = "team_second", referencedColumnName = "team_id")
     private Team teamSecond;
 
+
     @Column(name = "goal_ft")
     private Integer goalFt;
 
-
    @Column(name = "goal_st")
-    private Integer goalSt;
-
+   private Integer goalSt;
 
     @Column(name = "match_date")
-
     private Integer matchDate;
 
     public Match(Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Integer matchDate){
@@ -41,6 +36,7 @@ public class Match {
         this.goalSt = goalSt;
         this.goalFt = goalFt;
         this.matchDate = matchDate;
+
 
     }
 
@@ -56,6 +52,7 @@ public class Match {
         this.goalFt = goalFt;
         this.goalSt = goalSt;
         this.matchDate = matchDate;
+
 
     }
 
@@ -108,4 +105,6 @@ public class Match {
     public void setMatchDate(Integer matchDate) {
         this.matchDate = matchDate;
     }
+
+
 }

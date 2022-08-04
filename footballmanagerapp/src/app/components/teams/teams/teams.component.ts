@@ -3,6 +3,7 @@ import {Team} from "../../../team";
 import {HttpService} from "../../../services/http.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Match} from "../../../match";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 
 
@@ -17,11 +18,18 @@ export class TeamsComponent implements OnInit {
   public matches : Match[]=[];
   message: Boolean = false;
 
+  leagueForm ! : FormGroup;
 
-  constructor(private httpService: HttpService) {
+
+  constructor(private httpService: HttpService, private fb : FormBuilder) {
   }
 
   ngOnInit(): void {
+
+    this.leagueForm = this.fb.group({
+      name : '',
+
+    })
 
     this.getTeams();
 

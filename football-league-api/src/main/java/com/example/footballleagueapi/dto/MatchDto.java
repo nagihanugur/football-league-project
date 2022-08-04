@@ -1,25 +1,28 @@
 package com.example.footballleagueapi.dto;
-
 import com.example.footballleagueapi.dto.mapper.TeamMapper;
 import com.example.footballleagueapi.entity.Match;
-import com.example.footballleagueapi.entity.Team;
+
 
 public class MatchDto {
 
     private Integer matchId;
     private TeamDto teamFirst;
     private TeamDto teamSecond;
+
     private Integer goalFt;
     private Integer goalSt;
     private Integer matchDate;
 
     private TeamMapper teamMapper;
 
+
     public MatchDto(){}
 
     public MatchDto(TeamMapper teamMapper){
 
         this.teamMapper = teamMapper;
+
+
     }
 
     public MatchDto(Integer matchId,TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, Integer matchDate){
@@ -32,6 +35,18 @@ public class MatchDto {
         this.matchDate = matchDate;
 
 
+
+    }
+    public MatchDto(TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, Integer matchDate){
+
+        this.teamFirst = teamFirst;
+        this.teamSecond = teamSecond;
+        this.goalFt = goalFt;
+        this.goalSt = goalSt;
+        this.matchDate = matchDate;
+
+
+
     }
 
     public MatchDto(Match match){
@@ -41,6 +56,7 @@ public class MatchDto {
         this.goalFt = match.getGoalFt();
         this.goalSt = match.getGoalSt();
         this.matchDate = match.getMatchDate();
+
 
     }
 
@@ -94,4 +110,6 @@ public class MatchDto {
     public void setMatchDate(Integer matchDate) {
         this.matchDate = matchDate;
     }
+
+
 }

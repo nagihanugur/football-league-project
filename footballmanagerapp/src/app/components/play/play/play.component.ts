@@ -13,6 +13,7 @@ import {Team} from "../../../team";
 export class PlayComponent implements OnInit {
 
   public matches: Match [] = [];
+  public teams : Team [] = [];
   match !: Match;
   team !: Team;
   team2 !: Team;
@@ -36,10 +37,15 @@ export class PlayComponent implements OnInit {
     })
   }
 
-
+  getAllTeams(){
+    this.httpService.getTeams().subscribe(res=>{
+      this.teams = res;
+    })
+  }
 
 
   playGame(id: number) {
+
 
     this.httpService.getMatch(id).subscribe(result => {
 
@@ -117,6 +123,13 @@ export class PlayComponent implements OnInit {
         this.match.teamFirst.power += 10;
         this.match.teamFirst.point += 3;
         this.match.teamSecond.power -= 10;
+        this.match.teamFirst.goalCount += this.match.goalFt;
+        this.match.teamSecond.goalCount += this.match.goalSt;
+        this.match.teamFirst.won +=1;
+        this.match.teamFirst.played +=1;
+        this.match.teamSecond.lose +=1;
+        this.match.teamSecond.played +=1;
+
 
         this.httpService.updateMatch(this.match).subscribe(res =>{
 
@@ -130,6 +143,13 @@ export class PlayComponent implements OnInit {
         this.match.teamFirst.power -= 10;
         this.match.teamSecond.power += 10;
         this.match.teamSecond.point += 3;
+        this.match.teamFirst.goalCount += this.match.goalFt;
+        this.match.teamSecond.goalCount += this.match.goalSt;
+        this.match.teamSecond.won +=1;
+        this.match.teamFirst.lose +=1;
+        this.match.teamFirst.played +=1;
+        this.match.teamSecond.played +=1;
+
 
         this.httpService.updateMatch(this.match).subscribe(res =>{
 
@@ -142,6 +162,12 @@ export class PlayComponent implements OnInit {
 
         this.match.teamFirst.point += 1;
         this.match.teamSecond.point += 1;
+        this.match.teamFirst.goalCount += this.match.goalFt;
+        this.match.teamSecond.goalCount += this.match.goalSt;
+        this.match.teamSecond.draw +=1;
+        this.match.teamFirst.played +=1;
+        this.match.teamSecond.played +=1;
+        this.match.teamFirst.draw +=1;
 
         this.httpService.updateMatch(this.match).subscribe(res =>{
 

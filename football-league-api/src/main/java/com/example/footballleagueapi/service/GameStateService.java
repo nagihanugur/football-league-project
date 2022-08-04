@@ -3,14 +3,13 @@ package com.example.footballleagueapi.service;
 
 import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.GameStateDto;
-import com.example.footballleagueapi.dto.GoalDto;
 import com.example.footballleagueapi.dto.mapper.GameStateMapper;
 import com.example.footballleagueapi.entity.GameState;
-import com.example.footballleagueapi.entity.Goal;
 import com.example.footballleagueapi.repository.IGameStateRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameStateService {
@@ -34,19 +33,41 @@ public class GameStateService {
 
     public ServiceResult<GameStateDto> addState( GameStateDto stateDto){
         ServiceResult<GameStateDto> serviceResult = new ServiceResult<>();
-        if (stateDto.getStateId() == null || stateDto.getWon() == null || stateDto.getDraw() == null || stateDto.getLose() == null ||
-        stateDto.getPlayed() == null){
+        Optional<GameState> state = gameStateRepository.findById(stateDto.getStateId());
 
-            serviceResult.setErrorMessage("Please fill all requirements!!");
-            serviceResult.setSuccess(false);
+        if (state.isPresent()){
+            state.get().setWon(stateDto.getWon());
+            state.get().setDraw(stateDto.getDraw());
+            state.get().setLose(stateDto.getLose());
+            state.get().setPlayed(stateDto.getPlayed());
+
+            GameState updatedState = gameStateRepository.save(state.get());
+            serviceResult.setData(gameStateMapper.toGameStateDto(updatedState));
             return serviceResult;
         }
-        GameState addedState = gameStateRepository.save(gameStateMapper.toGameState(stateDto));
-        serviceResult.setData(gameStateMapper.toGameStateDto(addedState));
+
+        GameState updatedState = gameStateRepository.save(gameStateMapper.toGameState(stateDto));
+        serviceResult.setData(gameStateMapper.toGameStateDto(updatedState));
         return serviceResult;
 
 
+    }
 
+    public ServiceResult<GameStateDto> getStateById(Integer id){
+        ServiceResult<GameStateDto> serviceResult = new ServiceResult<>();
+
+        Optional<GameState> state = gameStateRepository.findById(id);
+
+        if (state.isPresent()){
+
+            serviceResult.setData(gameStateMapper.toGameStateDto(state.get()));
+            return serviceResult;
+
+        }
+
+        serviceResult.setSuccess(false);
+        serviceResult.setErrorMessage("was not found state by id..");
+        return serviceResult;
     }
 
 

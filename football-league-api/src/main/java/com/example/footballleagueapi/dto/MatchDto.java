@@ -1,67 +1,60 @@
 package com.example.footballleagueapi.dto;
+
+import com.example.footballleagueapi.dto.mapper.LeagueMapper;
 import com.example.footballleagueapi.dto.mapper.TeamMapper;
 import com.example.footballleagueapi.entity.Match;
 
 
 public class MatchDto {
-
     private Integer matchId;
     private TeamDto teamFirst;
     private TeamDto teamSecond;
-
+    private LeagueDto leagueDto;
     private Integer goalFt;
     private Integer goalSt;
     private Integer matchDate;
 
+
     private TeamMapper teamMapper;
+    private LeagueMapper leagueMapper;
 
-
-    public MatchDto(){}
-
-    public MatchDto(TeamMapper teamMapper){
-
-        this.teamMapper = teamMapper;
-
-
+    public MatchDto() {
     }
 
-    public MatchDto(Integer matchId,TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, Integer matchDate){
-
+    public MatchDto(TeamMapper teamMapper, LeagueMapper leagueMapper) {
+        this.teamMapper = teamMapper;
+        this.leagueMapper = leagueMapper;
+    }
+    public MatchDto(Integer matchId, TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, Integer matchDate, LeagueDto leagueDto) {
         this.matchId = matchId;
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
         this.goalFt = goalFt;
         this.goalSt = goalSt;
         this.matchDate = matchDate;
-
-
-
+        this.leagueDto = leagueDto;
     }
-    public MatchDto(TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, Integer matchDate){
-
+    public MatchDto(TeamDto teamFirst, TeamDto teamSecond, Integer goalFt, Integer goalSt, Integer matchDate, LeagueDto leagueDto) {
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
         this.goalFt = goalFt;
         this.goalSt = goalSt;
         this.matchDate = matchDate;
-
-
+        this.leagueDto = leagueDto;
 
     }
 
-    public MatchDto(Match match){
+    public MatchDto(Match match) {
         this.matchId = match.getMatchId();
         this.teamFirst = teamMapper.toTeamDto(match.getTeamFirst());
         this.teamSecond = teamMapper.toTeamDto(match.getTeamSecond());
         this.goalFt = match.getGoalFt();
         this.goalSt = match.getGoalSt();
         this.matchDate = match.getMatchDate();
-
+       this.leagueDto = leagueMapper.toLeagueDto(match.getLeague());
 
     }
 
-    public MatchDto(TeamDto toTeamDto, TeamDto toTeamDto1, int i, int i1, Integer s) {
-    }
 
     public Integer getMatchId() {
         return matchId;
@@ -111,5 +104,11 @@ public class MatchDto {
         this.matchDate = matchDate;
     }
 
+    public LeagueDto getLeagueDto() {
+        return leagueDto;
+    }
 
+    public void setLeagueDto(LeagueDto leagueDto) {
+        this.leagueDto = leagueDto;
+    }
 }

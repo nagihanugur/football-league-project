@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("leagueapi/teams")
 public class TeamController {
@@ -36,6 +37,17 @@ public class TeamController {
     public ResponseEntity<TeamDto> getAllById(@PathVariable Integer teamId){
 
         ServiceResult<TeamDto> serviceResult = teamService.getTeamById(teamId);
+        if (serviceResult.isSuccess()){
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("leagueId/{leagueId}")
+    public ResponseEntity<List<TeamDto>> getAllTeamByLeagueId(@PathVariable Integer leagueId){
+
+        ServiceResult<List<TeamDto>> serviceResult = teamService.getAllTeamByLeagueId(leagueId);
+
         if (serviceResult.isSuccess()){
             return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
         }

@@ -41,19 +41,17 @@ public class Team {
     @Column(name = "goal_count")
     private Integer goalCount;
 
+    @ManyToOne( cascade={CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @JoinColumn(name="league_id")
+    private League league;
 
-
-   /* @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "state_id", referencedColumnName = "state_id")
-    private GameState gameState;
-*/
 
 
     public Team(){
 
     }
     public Team(Integer teamId, String name, String emblem, String features, Float power, Integer point, Integer won,
-                Integer draw, Integer lose, Integer played, Integer goalCount){
+                Integer draw, Integer lose, Integer played, Integer goalCount, League league){
         this.teamId = teamId;
         this.name = name;
         this.emblem = emblem;
@@ -65,6 +63,7 @@ public class Team {
         this.lose = lose;
         this.played = played;
         this.goalCount = goalCount;
+        this.league = league;
 
 
     }
@@ -93,13 +92,6 @@ public class Team {
         this.features = features;
     }
 
-  /*  public GameState getGameState() {
-        return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    } */
 
     public Float getPower(){return power;}
 
@@ -150,5 +142,13 @@ public class Team {
 
     public void setGoalCount(Integer goalCount) {
         this.goalCount = goalCount;
+    }
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
     }
 }

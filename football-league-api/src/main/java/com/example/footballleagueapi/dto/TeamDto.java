@@ -1,11 +1,11 @@
 package com.example.footballleagueapi.dto;
-import com.example.footballleagueapi.dto.mapper.GameStateMapper;
+import com.example.footballleagueapi.dto.mapper.LeagueMapper;
 import com.example.footballleagueapi.entity.Team;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
-
+@Component
 public class TeamDto {
-
     private Integer teamId;
     private String name;
     private String features;
@@ -17,20 +17,16 @@ public class TeamDto {
     private Integer lose;
     private Integer played;
     private Integer goalCount;
-  //  private GameStateDto gameStateDto;
+    private LeagueDto leagueDto;
 
-  //  private GameStateMapper gameStateMapper;
+    @Autowired
+    private LeagueMapper leagueMapper;
 
     public TeamDto(){}
 
 
-  /*  public TeamDto(GameStateMapper gameStateMapper){
-        this.gameStateMapper = gameStateMapper;
-
-    }*/
-
     public TeamDto(Integer teamId, String name, String features, String emblem, Float power, Integer point,
-                   Integer won, Integer draw, Integer lose, Integer played, Integer goalCount){
+                   Integer won, Integer draw, Integer lose, Integer played, Integer goalCount, LeagueDto leagueDto){
         this.teamId = teamId;
         this.name = name;
         this.emblem = emblem;
@@ -42,10 +38,9 @@ public class TeamDto {
         this.lose = lose;
         this.played = played;
         this.goalCount = goalCount;
-
+        this.leagueDto = leagueDto;
 
     }
-
     public TeamDto(Team team){
         this.teamId = team.getTeamId();
         this.name = team.getName();
@@ -58,8 +53,7 @@ public class TeamDto {
         this.lose = team.getLose();
         this.played = team.getPlayed();
         this.goalCount = goalCount;
-
-        //  this.gameStateDto = gameStateMapper.toGameStateDto(team.getGameState());
+        this.leagueDto = leagueMapper.toLeagueDto(team.getLeague());
 
     }
 
@@ -152,12 +146,11 @@ public class TeamDto {
         this.goalCount = goalCount;
     }
 
-    /*   public GameStateDto getGameStateDto() {
-        return gameStateDto;
+    public LeagueDto getLeagueDto() {
+        return leagueDto;
     }
 
-    public void setGameStateDto(GameStateDto gameStateDto) {
-        this.gameStateDto = gameStateDto;
+    public void setLeagueDto(LeagueDto leagueDto) {
+        this.leagueDto = leagueDto;
     }
-*/
 }

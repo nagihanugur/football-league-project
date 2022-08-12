@@ -1,22 +1,28 @@
 package com.example.footballleagueapi.dto.mapper;
-
 import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.entity.Team;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TeamMapper {
 
-  //  private final GameStateMapper gameStateMapper;
+    @Autowired
+    private LeagueMapper leagueMapper;
 
-   /* public TeamMapper() {
-        this.gameStateMapper = new GameStateMapper();
-    } */
+    public TeamMapper() {
+        if (leagueMapper == null){
+            leagueMapper = new LeagueMapper();
+        }
+
+    }
 
     public TeamDto toTeamDto(Team team){
-
-        TeamDto dto = new TeamDto();
+        TeamDto dto;
+        dto = new TeamDto();
         dto.setTeamId(team.getTeamId());
         dto.setName(team.getName());
         dto.setFeatures(team.getFeatures());
@@ -28,8 +34,9 @@ public class TeamMapper {
         dto.setLose(team.getLose());
         dto.setPlayed(team.getPlayed());
         dto.setGoalCount(team.getGoalCount());
-        //dto.setGameStateDto(gameStateMapper.toGameStateDto(team.getGameState()));
-        return dto;
+        dto.setLeagueDto(leagueMapper.toLeagueDto(team.getLeague()));
+
+         return dto;
     }
 
     public List<TeamDto> toTeamDtoList(List<Team> teams){
@@ -54,9 +61,18 @@ public class TeamMapper {
         team.setLose(dto.getLose());
         team.setPlayed(dto.getPlayed());
         team.setGoalCount(dto.getGoalCount());
-     //   team.setGameState(gameStateMapper.toGameState(dto.getGameStateDto()));
+        team.setLeague(leagueMapper.toLeague(dto.getLeagueDto()));
+
 
         return team;
+    }
+
+    public List<Team> toTeamList(List<TeamDto> teamDtoList){
+
+        List<Team> teams = new ArrayList<>();
+        teamDtoList.forEach(teamDto -> teams.add(toTeam(teamDto)));
+
+        return teams;
     }
 
 }

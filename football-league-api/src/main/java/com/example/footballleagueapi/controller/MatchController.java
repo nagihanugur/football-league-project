@@ -28,7 +28,7 @@ public class MatchController {
     }
 
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<MatchDto>> getAllMatches(){
 
 
@@ -41,12 +41,24 @@ public class MatchController {
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/matchesByLeague/{leagueId}")
+    public ResponseEntity<List<MatchDto>> getMatchesByLeagueId(@PathVariable Integer leagueId){
+
+        ServiceResult<List<MatchDto>> serviceResult = matchService.getMatchesByLeaguId(leagueId);
+        if (serviceResult.isSuccess()){
+
+            return new ResponseEntity<List<MatchDto>>(serviceResult.getData(), HttpStatus.OK);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
 
 
-    @GetMapping("/create")
-    public ResponseEntity<List<MatchDto>> createAllMatches(){
 
-        ServiceResult<List<MatchDto>> serviceResult = matchService.createMatches();
+    @GetMapping("/create/{id}")
+    public ResponseEntity<List<MatchDto>> createAllMatches(@PathVariable Integer id){
+
+        ServiceResult<List<MatchDto>> serviceResult = matchService.createMatches(id);
 
         if (serviceResult.isSuccess()){
 
@@ -56,21 +68,20 @@ public class MatchController {
 
     }
 
-    @PostMapping("/createFix")
-    public ResponseEntity<List<MatchDto>> createAllMatches(@RequestBody List<TeamDto> TeamDtoList ){
-
-        ServiceResult<List<MatchDto>> serviceResult = matchService.createNewMatches(TeamDtoList);
-
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteAllMatches(){
+        ServiceResult<Void> serviceResult = matchService.deleteAllMatches();
         if (serviceResult.isSuccess()){
-
             return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
-
     }
+
+
+
 
     @PostMapping("/save")
-    public ResponseEntity<List<MatchDto>> updateMatch(@RequestBody List<MatchDto> matchDtoList){
+    public ResponseEntity<List<MatchDto>> saveMatch(@RequestBody List<MatchDto> matchDtoList){
 
         ServiceResult<List<MatchDto>> serviceResult = matchService.saveMatch(matchDtoList);
 
@@ -88,6 +99,16 @@ public class MatchController {
 
         if (serviceResult.isSuccess()){
 
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/deleteByLeagueId/{leagueId}")
+    public ResponseEntity<Void> deleteMatchesByLeagueId(@PathVariable Integer leagueId){
+        ServiceResult<Void> serviceResult = matchService.deleteMatchesByLeagueId(leagueId);
+
+        if (serviceResult.isSuccess()){
             return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();

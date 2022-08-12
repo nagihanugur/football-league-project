@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.math.BigInteger;
 import java.util.List;
 
 @Entity
@@ -11,21 +12,31 @@ import java.util.List;
 public class League {
 
     @Id
-    @Column(name = "league_id")
+    @SequenceGenerator(name="jpaPkSeqLeague", sequenceName="league_league_id_seq", allocationSize=1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaPkSeqLeague")
+    @Column(name="league_id")
+
     private Integer leagueId;
 
     @Column(name = "name")
     private String name;
 
+   @OneToMany(mappedBy = "league", cascade = CascadeType.ALL)
+    List<Match> matchList;
+
+    @OneToMany(mappedBy = "league", cascade = CascadeType.ALL)
+    List<Team> teamList;
+
 
     public League() {
     }
 
-    public League(Integer leagueId, String name){
+    public League(Integer leagueId, String name,  List<Team> teamList, List<Match> matchList){
 
         this.leagueId = leagueId;
         this.name = name;
-
+        this.matchList = matchList;
+        this.teamList = teamList;
     }
 
     public Integer getLeagueId() {
@@ -44,4 +55,19 @@ public class League {
         this.name = name;
     }
 
+   public List<Match> getMatchList() {
+        return matchList;
+    }
+
+    public void setMatchList(List<Match> matchList) {
+        this.matchList = matchList;
+    }
+
+    public List<Team> getTeamList() {
+        return teamList;
+    }
+
+    public void setTeamList(List<Team> teamList) {
+        this.teamList = teamList;
+    }
 }

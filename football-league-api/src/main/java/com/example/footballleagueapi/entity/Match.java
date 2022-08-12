@@ -20,6 +20,9 @@ public class Match {
     @JoinColumn(name = "team_second", referencedColumnName = "team_id")
     private Team teamSecond;
 
+    @ManyToOne
+    @JoinColumn(name="league_id")
+    private League league;
 
     @Column(name = "goal_ft")
     private Integer goalFt;
@@ -30,14 +33,13 @@ public class Match {
     @Column(name = "match_date")
     private Integer matchDate;
 
-    public Match(Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Integer matchDate){
+    public Match(Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Integer matchDate, League league){
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
         this.goalSt = goalSt;
         this.goalFt = goalFt;
         this.matchDate = matchDate;
-
-
+        this.league = league;
     }
 
     public Match(){
@@ -45,14 +47,14 @@ public class Match {
     }
 
 
-    public Match(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Integer  matchDate){
+    public Match(Integer matchId, Team teamFirst, Team teamSecond, Integer goalFt, Integer goalSt, Integer  matchDate, League league){
         this.matchId = matchId;
         this.teamFirst = teamFirst;
         this.teamSecond = teamSecond;
         this.goalFt = goalFt;
         this.goalSt = goalSt;
         this.matchDate = matchDate;
-
+        this.league = league;
 
     }
 
@@ -104,6 +106,14 @@ public class Match {
 
     public void setMatchDate(Integer matchDate) {
         this.matchDate = matchDate;
+    }
+
+   public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
     }
 
 

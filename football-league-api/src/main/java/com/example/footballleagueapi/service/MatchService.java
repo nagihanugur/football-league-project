@@ -1,37 +1,37 @@
 package com.example.footballleagueapi.service;
 
 import com.example.footballleagueapi.common.ServiceResult;
-import com.example.footballleagueapi.dto.LeagueDto;
 import com.example.footballleagueapi.dto.MatchDto;
 import com.example.footballleagueapi.dto.TeamDto;
 import com.example.footballleagueapi.dto.mapper.LeagueMapper;
 import com.example.footballleagueapi.dto.mapper.MatchMapper;
 import com.example.footballleagueapi.dto.mapper.TeamMapper;
-import com.example.footballleagueapi.entity.League;
 import com.example.footballleagueapi.entity.Match;
 import com.example.footballleagueapi.entity.Team;
-import com.example.footballleagueapi.repository.ILeagueRepository;
 import com.example.footballleagueapi.repository.IMatchRepository;
 import com.example.footballleagueapi.repository.ITeamRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 @Service
 public class MatchService {
 
     private final IMatchRepository matchRepository;
-    private final MatchMapper matchMapper;
+
+    private final  MatchMapper matchMapper;
     private final TeamMapper teamMapper;
+    private final LeagueMapper leagueMapper;
     private final TeamService teamService;
     private final ITeamRepository teamRepository;
-
 
 
     public MatchService(IMatchRepository matchRepository, TeamService teamService, ITeamRepository teamRepository){
         this.matchRepository = matchRepository;
         this.teamService = teamService;
         this.teamRepository = teamRepository;
+        this.leagueMapper = new LeagueMapper();
         this.matchMapper = new MatchMapper();
         this.teamMapper = new TeamMapper();
     }
@@ -43,6 +43,28 @@ public class MatchService {
 
 
         return new ServiceResult<List<MatchDto>>(matchDtos);
+    }
+
+    public ServiceResult<List<MatchDto>> getMatchesByLeaguId(Integer id){
+
+        List<Match> matches = (List<Match>) matchRepository.findAll();
+        ServiceResult<List<MatchDto>> serviceResult = new ServiceResult<>();
+        List<Match> matchList = new ArrayList<>();
+
+
+        for (Match match:matches
+        ) {
+            if (match.getTeamFirst().getLeague().getLeagueId()== id && match.getTeamSecond().getLeague().getLeagueId() == id){
+               matchList.add(match);
+
+            }
+
+        }
+        List<MatchDto> matchDtos = matchMapper.toMatchDtoList(matchList);
+        serviceResult.setData(matchDtos);
+        serviceResult.setSuccess(true);
+        return serviceResult;
+
     }
 
     public ServiceResult<Void> deleteAllMatches(){
@@ -106,6 +128,7 @@ public class MatchService {
            match.get().setTeamSecond(teamMapper.toTeam(matchDto.getTeamSecond()));
            match.get().setGoalFt(matchDto.getGoalFt());
            match.get().setGoalSt(matchDto.getGoalSt());
+         //  match.get().setLeague(leagueMapper.toLeague(matchDto.getLeagueDto()));
 
             Match updatedMatch =  matchRepository.save(match.get());
 
@@ -122,14 +145,40 @@ public class MatchService {
         return serviceResult;
     }
 
+    public ServiceResult<Void> deleteMatchesByLeagueId(Integer id){
+
+        ServiceResult<Void> serviceResult = new ServiceResult<>();
+        List<Match> matchList = matchRepository.getAllByOrderByMatchId();
+
+        for (Match match : matchList) {
+            if (match.getTeamFirst().getLeague().getLeagueId() == id && match.getTeamSecond().getLeague().getLeagueId() == id){
+                matchRepository.delete(match);
+            }
+
+        }
+        for (Match match : matchList) {
+            if (match.getTeamFirst().getLeague().getLeagueId() == id){
+                serviceResult.setSuccess(false);
+                return serviceResult;
+            }
+
+        }
+
+        serviceResult.setSuccess(true);
+
+        return serviceResult;
+
+
+    }
+
 
 //CREATE MATCH
 
-   public ServiceResult<List<MatchDto>> createMatches(){
+   public ServiceResult<List<MatchDto>> createMatches(Integer id){
 
         ServiceResult<List<MatchDto>> serviceResult = new ServiceResult<>();
 
-        List<Team> teams = teamRepository.getAllByOrderByTeamId();
+        List<Team> teams = teamRepository.findAllByLeague_LeagueId(id);
         teamMapper.toTeamDtoList(teams);
 
 
@@ -145,8 +194,11 @@ public class MatchService {
                  int firstIndex = j;
                  int secondIndex = (teams.size()-1) - j;
 
-                 Match match = (new Match(teams.get(firstIndex), teams.get(secondIndex),0,0,i+1));
-                 Match match2 = (new Match(teams.get(secondIndex), teams.get(firstIndex),0,0,i+ teams.size()));
+                 Match match = (new Match(teams.get(firstIndex), teams.get(secondIndex),0,0,i+1, teams.get(firstIndex).getLeague()));
+                 Match match2 = (new Match(teams.get(secondIndex), teams.get(firstIndex),0,0,i+ teams.size(),teams.get(secondIndex).getLeague()));
+
+               //  Match match = (new Match(teamMapper.toTeam(teams.get(firstIndex)), teamMapper.toTeam(teams.get(secondIndex)),0,0,i+1));
+                //  Match match2 = (new Match(teamMapper.toTeam(teams.get(secondIndex)), teamMapper.toTeam(teams.get(firstIndex)),0,0,i+ teams.size()));
 
                  matchList.add(match);
                  matchList.add(match2);
@@ -167,45 +219,6 @@ public class MatchService {
          return new ServiceResult<List<MatchDto>>(matchMapper.toMatchDtoList(matchList));
 
     }
-
-    public ServiceResult<List<MatchDto>> createNewMatches(List<TeamDto> teamDtoList){
-
-
-        List<Match> matchList = new ArrayList<>();
-
-
-        int weekCount = teamDtoList.size()-1;
-        int matchCountPerWeek = teamDtoList.size()/2;
-
-        for(int i=0; i < weekCount; i++){
-
-            for (int j = 0; j < matchCountPerWeek; j++){
-
-                int firstIndex = j;
-                int secondIndex = (teamDtoList.size()-1) - j;
-
-             /*   Match match = new Match(teamMapper.toTeam(teamDtoList.get(firstIndex)), teamMapper.toTeam(teamDtoList.get(secondIndex)),0, 0,i+1);
-
-
-                matchList.add(match);
-
-                matchRepository.save(match);*/
-
-            }
-            List<Team> tempList = new ArrayList<>();
-            tempList.add(teamMapper.toTeam(teamDtoList.get(0)));
-            tempList.add(teamMapper.toTeam(teamDtoList.get(teamDtoList.size()-1)));
-
-            for (int k = 1; k < teamDtoList.size() - 1; k++){  // aradaki takımlar eklendi
-                tempList.add(teamMapper.toTeam(teamDtoList.get(k)));
-            }
-            teamDtoList = teamMapper.toTeamDtoList(tempList);
-        }
-
-        return new ServiceResult<List<MatchDto>>(matchMapper.toMatchDtoList(matchList));
-    }
-
-
 
 
 /*

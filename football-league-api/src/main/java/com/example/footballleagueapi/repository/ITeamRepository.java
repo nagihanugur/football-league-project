@@ -15,6 +15,7 @@ public interface ITeamRepository extends CrudRepository<Team, Integer> {
     //Team getByTeamId(Integer id);
     Team findAllByTeamId(Integer id);
     Team findTeamByTeamId(Integer id);
+    List<Team> findAllByLeague_LeagueId(Integer id);
 
 
 

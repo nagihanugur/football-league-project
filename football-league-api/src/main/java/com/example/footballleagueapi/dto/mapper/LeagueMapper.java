@@ -2,24 +2,32 @@ package com.example.footballleagueapi.dto.mapper;
 
 import com.example.footballleagueapi.dto.LeagueDto;
 import com.example.footballleagueapi.entity.League;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class LeagueMapper {
 
-  //  private final MatchMapper matchMapper;
+   @Autowired
+   private  MatchMapper matchMapper;
+   @Autowired
+   private  TeamMapper teamMapper;
 
     public LeagueMapper(){
-    //    this.matchMapper = new MatchMapper(leagueMapper);
+
     }
+
 
     public LeagueDto toLeagueDto(League league){
 
         LeagueDto leagueDto = new LeagueDto();
         leagueDto.setLeagueId(league.getLeagueId());
         leagueDto.setName(league.getName());
-     //   leagueDto.setMatches(matchMapper.toMatchDtoList(league.getMatches()));
+      //  leagueDto.setMatches(matchMapper.toMatchDtoList(league.getMatchList()));
+      //  leagueDto.setTeams(teamMapper.toTeamDtoList(league.getTeamList()));
 
         return leagueDto;
 
@@ -30,7 +38,8 @@ public class LeagueMapper {
         League league = new League();
         league.setLeagueId(leagueDto.getLeagueId());
         league.setName(leagueDto.getName());
-      //  league.setMatches(matchMapper.toMatchList(leagueDto.getMatches()));
+       // league.setMatchList(matchMapper.toMatchList(leagueDto.getMatches()));
+      //  league.setTeamList(teamMapper.toTeamList(leagueDto.getTeams()));
 
         return league;
     }

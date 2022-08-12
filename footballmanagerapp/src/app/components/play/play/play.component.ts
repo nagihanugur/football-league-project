@@ -3,6 +3,7 @@ import {Match} from "../../../match";
 import {HttpService} from "../../../services/http.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Team} from "../../../team";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -18,22 +19,24 @@ export class PlayComponent implements OnInit {
   team !: Team;
   team2 !: Team;
   isShow : boolean= false;
+  msg :string='';
   public updatedMatches : Match[] = [];
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private router : ActivatedRoute) {
 
 
   }
 
   ngOnInit(): void {
-    this.getAllMatches();
+    this.getMatches();
 
   }
 
-  getAllMatches(){
 
-    this.httpService.getAllMatches().subscribe(res=>{
-      this.matches = res;
+  getMatches(){
+    this.httpService.getMatchesByLeagueId(this.router.snapshot.params['leagueId']).subscribe(response=>{
+      this.matches = response;
+      console.log(response);
     })
   }
 
@@ -41,6 +44,12 @@ export class PlayComponent implements OnInit {
     this.httpService.getTeams().subscribe(res=>{
       this.teams = res;
     })
+  }
+
+  clickEvent(){
+
+    this.msg = 'match is played';
+
   }
 
 
@@ -179,12 +188,11 @@ export class PlayComponent implements OnInit {
       }
     });
 
-    setTimeout(function () {
+   setTimeout(function () {
 
       window.location.reload();
 
     }, 1000);
-
 
   }
 

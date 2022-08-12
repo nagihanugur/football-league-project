@@ -1,32 +1,233 @@
 
-<div *ngIf="message" class="alert alert-success" role="alert">
-  <strong>Success! Team is created...</strong>
-  <button (click)="removeMessage()" type="button" class="btn btn-light">X</button>
+<div class="container">
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="https://img.playanka.com/thumbnail?quality=100&stripmeta=true&type=webp&url=https%3A%2F%2Fcdn.playanka.com%2Fxgnsahip%2FMedia%2FImages%2FOriginals%2F0001858_0.jpeg&width=750&sign=0N6KQsjbUJtvVfqrcGbae66iUsotms8fvucK9GHjS-U" alt="" width="72" height="57">
+      <h2>FOOTBALL MANAGER</h2>
+      <p class="lead">Create League and Add Teams!</p>
+    </div>
+
+  <div class="col-md-5 col-lg-4 order-md-last">
+    <h4 class="d-flex justify-content-between align-items-center mb-3">
+      <span class="text-primary">Your League</span>
+    </h4>
+    <div class="mb-3">
+      <label  class="form-label">League Name</label>
+      <input type="text" class="form-control" [(ngModel)]="league.name" placeholder="Enter league name">
+    </div>
+    <button type="button" class="btn btn-primary" (click)="createLeague()">Create League</button>
+
+  </div>
+  <br>
+
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="mb-3">Team List</h4>
+
+        <div class="my-3">
+          <table class="table ">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Features</th>
+              <th scope="col">Power</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let teamTab of teams" >
+              <td ><img style="width: 50px;height: 50px" src="{{teamTab.emblem}}"></td>
+              <td>{{teamTab.name}}</td>
+              <td>{{teamTab.features}}</td>
+              <td>{{teamTab.power}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="message" class="alert alert-success" role="alert">
+          <strong>Success! Team is created...</strong>
+          <button (click)="removeMessage()" type="button" class="btn btn-light">X</button>
+        </div>
+
+      </div>
+
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Create Team</h4>
+
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label">Team name</label>
+              <input type="text" class="form-control" [(ngModel)]="team.name"  placeholder="" value="" required>
+            </div>
+
+            <div class="col-sm-6">
+              <label  class="form-label">Emblem</label>
+              <input type="text" class="form-control"  [(ngModel)]="team.emblem" placeholder="" value="" required>
+            </div>
+
+
+            <div class="col-12">
+              <label  class="form-label">Features <span class="text-muted">(Optional)</span></label>
+              <input type="text" class="form-control"  [(ngModel)]="team.features" placeholder="">
+            </div>
+
+            <div class="col-12">
+              <label  class="form-label">Power</label>
+              <input type="text" class="form-control"  [(ngModel)]="team.power" placeholder="" >
+            </div>
+
+            <div class="col-12">
+              <label for="Point" class="form-label">Point </label>
+              <input type="text" class="form-control" id="Point" [(ngModel)]="team.point" placeholder="">
+            </div>
+
+            <div class="col-md-5">
+              <button type="button" class="btn btn-success" (click)="createTeam()">Create Team</button>
+            </div>
+
+          </div>
+
+
+          <hr class="my-4">
+
+
+
+      </div>
+    </div>
+
+
+  <br>
+  <hr class="my-4">
+
+
+</div>
+<!---
+<div formArrayName="teams">
+  <h2>Aliases</h2>
+  <button type="button" (click)="addTeam()">+ Add another alias</button>
+
+  <div *ngFor="let team of teams.controls; let i=index">
+    <div [formGroup]="teamForm">
+      <div class="form-group">
+        <label>Team Name</label>
+        <input type="text" class="form-control" formControlName="name" placeholder="Enter team name">
+
+      </div>
+      <div class="form-group">
+        <label>Emblem</label>
+        <input type="text" class="form-control" formControlName="emblem" placeholder="Enter image url">
+      </div>
+      <div class="form-group">
+        <label>Features</label>
+        <input type="text" class="form-control" formControlName="features" placeholder="Enter feautures">
+
+      </div>
+      <div class="form-group">
+        <label>Power</label>
+        <input type="number" class="form-control" formControlName="power" placeholder="power">
+      </div>
+      <div class="form-group">
+        <label>Point</label>
+        <input type="number" class="form-control" formControlName="point" placeholder="point">
+      </div>
+
+    </div>
+
+  </div>
+  <div>
+    <button (click)="createTeam()"></button>
+  </div>
 </div>
 
-<form [formGroup]="teamForm" >
-  <div class="form-group">
-    <label >Team Name</label>
-    <input type="text" class="form-control" formControlName="name"   placeholder="Enter team name">
+--->
+<!--
+  <form [formGroup]="leagueForm">
+    <div class="form-group">
+      <div class="col-auto">
+        <label>League</label>
+        <input type="number" class="form-control" formControlName="leagueId" placeholder="Enter league ID..">
+      </div>
+      <div class="col-auto">
+        <label>League</label>
+        <input type="text" class="form-control" formControlName="name" placeholder="Enter league name..">
+      </div>
+      <div formArrayName="teams">
+        <h2>Teams</h2>
+        <button type="button" class="btn btn-danger" (click)="addTeam()">+ Add another team</button>
 
-  </div>
-  <div class="form-group">
-    <label >Emblem</label>
-    <input type="text" class="form-control" formControlName="emblem" placeholder="Enter image url">
-  </div>
-  <div class="form-group">
-    <label >Features</label>
-    <input type="text" class="form-control" formControlName="features"   placeholder="Enter feautures">
+        <div *ngFor="let teamForm of teams.controls; let i=index">
+          <div  [formGroup]="teamForm">
+            <div class="form-group">
+              <label>Team Name</label>
+              <input type="text" class="form-control" formControlName="name" placeholder="Enter team name">
 
-  </div>
-  <div class="form-group">
-    <label >Power</label>
-    <input type="number" class="form-control" formControlName="power"  placeholder="power">
-  </div>
-  <div class="form-group">
-    <label >Point</label>
-    <input type="number" class="form-control" formControlName="point"  placeholder="point">
-  </div>
+            </div>
+            <div class="form-group">
+              <label>Emblem</label>
+              <input type="text" class="form-control" formControlName="emblem" placeholder="Enter image url">
+            </div>
+            <div class="form-group">
+              <label>Features</label>
+              <input type="text" class="form-control" formControlName="features" placeholder="Enter feautures">
 
-  <button routerLink="/teams" type="submit" class="btn btn-primary mt-3" [disabled]="teamForm.invalid" (click)="createTeam()">Submit</button>
-</form>
+            </div>
+            <div class="form-group">
+              <label>Power</label>
+              <input type="number" class="form-control" formControlName="power" placeholder="power">
+            </div>
+            <div class="form-group">
+              <label>Point</label>
+              <input type="number" class="form-control" formControlName="point" placeholder="point">
+            </div>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-success" (click)="createTeam()">Create Team</button>
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3" [disabled]="leagueForm.invalid" (click)="createLeague()">Save
+          League
+        </button>
+      </div>
+    </div>
+  </form>
+-->
+  <!--
+    <form  [formGroup]="teamForm" >
+      <div class="form-group">
+        <label >Team Name</label>
+        <input type="text" class="form-control" formControlName="name"   placeholder="Enter team name">
+
+      </div>
+      <div class="form-group">
+        <label >Emblem</label>
+        <input type="text" class="form-control" formControlName="emblem" placeholder="Enter image url">
+      </div>
+      <div class="form-group">
+        <label >Features</label>
+        <input type="text" class="form-control" formControlName="features"   placeholder="Enter feautures">
+
+      </div>
+      <div class="form-group">
+        <label >Power</label>
+        <input type="number" class="form-control" formControlName="power"  placeholder="power">
+      </div>
+      <div class="form-group">
+        <label >Point</label>
+        <input type="number" class="form-control" formControlName="point"  placeholder="point">
+      </div>
+     <div formGroupName="league">
+       <div class="form-group">
+         <label >League</label>
+         <input type="number" class="form-control" formControlName="name"  placeholder="league">
+       </div>
+     </div>
+
+      <button  type="submit" class="btn btn-primary mt-3" [disabled]="teamForm.invalid" (click)="createTeam()">Submit</button>
+    </form>
+
+    --->
+
+
+

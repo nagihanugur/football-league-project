@@ -5,6 +5,7 @@ export class Match{
   goalFt : number;
   goalSt : number;
   matchDate : any;
+  //leagueDto : any;
 
   constructor(matchId: number, teamFirst: any, teamSecond: any, goalFt: number, goalSt: number, matchDate: any) {
     this.matchId = matchId;
@@ -13,5 +14,7 @@ export class Match{
     this.goalFt = goalFt;
     this.goalSt = goalSt;
     this.matchDate = matchDate;
+  //  this.leagueDto = leagueDto;
+
   }
 }

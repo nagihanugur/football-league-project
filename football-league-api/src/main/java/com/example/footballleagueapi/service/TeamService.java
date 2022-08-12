@@ -1,13 +1,16 @@
 package com.example.footballleagueapi.service;
-
 import com.example.footballleagueapi.common.ServiceResult;
 import com.example.footballleagueapi.dto.TeamDto;
+import com.example.footballleagueapi.dto.mapper.LeagueMapper;
 import com.example.footballleagueapi.dto.mapper.TeamMapper;
+import com.example.footballleagueapi.entity.League;
 import com.example.footballleagueapi.entity.Team;
+import com.example.footballleagueapi.repository.ILeagueRepository;
 import com.example.footballleagueapi.repository.ITeamRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,28 +18,31 @@ import java.util.Optional;
 public class TeamService {
 
     private final ITeamRepository teamRepository;
+    private final ILeagueRepository leagueRepository;
     private final TeamMapper teamMapper;
+    private final LeagueMapper leagueMapper;
 
-  //  private final GameStateMapper gameStateMapper;
-
-
-
-    public TeamService(ITeamRepository teamRepository) {
+    public TeamService(ITeamRepository teamRepository, ILeagueRepository leagueRepository) {
         this.teamRepository = teamRepository;
-
-
+        this.leagueRepository = leagueRepository;
 
         this.teamMapper = new TeamMapper();
-     //   this.gameStateMapper = new GameStateMapper();
+        this.leagueMapper = new LeagueMapper();
 
     }
-
 
     public ServiceResult<List<TeamDto>> getAll(){
 
         List<Team> teams = teamRepository.getAllByOrderByTeamId();
         List<TeamDto> teamDtos = teamMapper.toTeamDtoList(teams);
 
+
+        return new ServiceResult<List<TeamDto>>(teamDtos);
+    }
+
+    public ServiceResult<List<TeamDto>> getAllTeamByLeagueId(Integer id){
+        List<Team> teams = teamRepository.findAllByLeague_LeagueId(id);
+        List<TeamDto> teamDtos = teamMapper.toTeamDtoList(teams);
 
         return new ServiceResult<List<TeamDto>>(teamDtos);
     }
@@ -60,20 +66,13 @@ public class TeamService {
     public ServiceResult<TeamDto> saveTeam(TeamDto teamDto){
 
         ServiceResult<TeamDto> serviceResult = new ServiceResult<>();
-        Team team = teamRepository.findTeamByTeamId(teamDto.getTeamId());
 
-      if(team == null){
+   //     Team team = teamRepository.findTeamByTeamId(teamDto.getTeamId());
+
 
           Team savedTeam = teamRepository.save(teamMapper.toTeam(teamDto));
           serviceResult.setData(teamMapper.toTeamDto(savedTeam));
-          return serviceResult;
-
-      }
-        serviceResult.setSuccess(false);
-        serviceResult.setErrorMessage("This team is already exist..");
         return serviceResult;
-
-
 
     }
 
@@ -93,7 +92,8 @@ public class TeamService {
            team.get().setLose(teamDto.getLose());
            team.get().setPlayed(teamDto.getPlayed());
            team.get().setGoalCount(teamDto.getGoalCount());
-          // team.get().setGameState(gameStateMapper.toGameState(teamDto.getGameStateDto()));
+           team.get().setLeague(leagueMapper.toLeague(teamDto.getLeagueDto()));
+
 
            Team  updatedTeam = teamRepository.save(team.get());
            serviceResult.setData(teamMapper.toTeamDto(updatedTeam));

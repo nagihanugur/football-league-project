@@ -14,6 +14,7 @@
               <th><span>Features</span></th>
               <th class="text-center"><span>Power</span></th>
               <th><span>Point</span></th>
+              <th><span>League Name</span></th>
               <th></th>
             </tr>
             </thead>
@@ -33,14 +34,17 @@
               <td>
                 {{team.point}}
               </td>
+              <td>
+                {{team.leagueDto.name}}
+              </td>
 
               <td style="width: 20%;">
 
-                <a routerLink="/updateTeam/{{team.teamId}}">
+                <a routerLink="/updateTeam/{{team.teamId!}}">
                   <button type="button" class="btn btn-primary ">edit</button>
                 </a>
 
-                <button type="button" class="btn btn-danger" (click)="deleteTeam(team.teamId)">delete
+                <button type="button" class="btn btn-danger" (click)="deleteTeam(team.teamId!)">delete
                 </button>
 
               </td>
@@ -75,16 +79,6 @@
 
       </div>
 
-      <form class="row g-3 ">
-
-        <div class="col-auto form">
-
-          <input type="text" class="form-control" placeholder="Fixture Name">
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-primary  yan" (click)="createAllFixture()">Create Fixture</button>
-        </div>
-      </form>
 
 
     </div>

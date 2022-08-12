@@ -3,6 +3,7 @@ import {Team} from "../../../team";
 import {Match} from "../../../match";
 import {HttpService} from "../../../services/http.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router";
 
 
 
@@ -20,9 +21,11 @@ export class FixtureComponent implements OnInit {
   public match !: Match;
 
   isTrue : boolean = true;
+ // selectedLeague = this.router.snapshot.params['leagueId'];
 
-  constructor(private httpService : HttpService) { }
+  constructor(private httpService : HttpService,private router : ActivatedRoute) { }
 
+  selectedLeague = this.router.snapshot.params['leagueId'];
   ngOnInit(): void {
 
     this.getMatches();
@@ -36,9 +39,10 @@ export class FixtureComponent implements OnInit {
     })
   }
 
-  public getMatches(){
-    this.httpService.getAllMatches().subscribe(res=>{
-      this.matches = res;
+  getMatches(){
+    this.httpService.getMatchesByLeagueId(this.router.snapshot.params['leagueId']).subscribe(response=>{
+      this.matches = response;
+      console.log(this.selectedLeague);
     })
   }
 

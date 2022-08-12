@@ -9,8 +9,9 @@ import {HttpService} from "./services/http.service";
 import { HomeComponent } from './components/home/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import {RouterModule} from "@angular/router";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {OrderModule} from "ngx-order-pipe";
+import { LeaguesComponent } from './components/leagues/leagues/leagues.component';
 
 
 @NgModule({
@@ -19,15 +20,17 @@ import {OrderModule} from "ngx-order-pipe";
     TeamsComponent,
     HomeComponent,
     HeaderComponent,
+    LeaguesComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    RouterModule,
-    ReactiveFormsModule,
-    OrderModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        RouterModule,
+        ReactiveFormsModule,
+        OrderModule,
+        FormsModule
+    ],
   providers: [
     HttpService
   ],

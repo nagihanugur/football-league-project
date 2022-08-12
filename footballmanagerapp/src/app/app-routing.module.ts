@@ -19,7 +19,7 @@ const routes: Routes = [
 
   },
   {
-    path : 'fixture',
+    path : 'fixture/:leagueId',
     loadChildren : ():Promise<any> =>
       import('./components/fixture/fixture.module').then(
         (m)=>m.FixtureModule),
@@ -45,10 +45,16 @@ const routes: Routes = [
         (m)=> m.UpdateTeamModule),
   },
   {
-    path : 'play',
+    path : 'play/:leagueId',
     loadChildren : () : Promise<any> =>
       import('./components/play/play.module').then(
         (m)=> m.PlayModule),
+  },
+  {
+    path : 'leagues',
+    loadChildren : () : Promise<any> =>
+      import('./components/leagues/leagues.module').then(
+        (m)=> m.LeaguesModule),
   }
 
 ];

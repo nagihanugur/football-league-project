@@ -1,7 +1,9 @@
 
 
 <div class="container">
+
   <div class="row">
+    <hr>
     <div class="col-lg-12">
       <div class="main-box clearfix">
         <div class="table-responsive">
@@ -34,6 +36,7 @@
                Week {{match.matchDate}}
               </td>
 
+
             </tr>
 
             </tbody>
@@ -42,6 +45,8 @@
 
       </div>
     </div>
+    <button class="btn btn-primary" [routerLink]="['/play', selectedLeague]">PLAY GAME</button>
+    <hr>
   </div>
 
 </div>

@@ -19,6 +19,12 @@ export class HttpService {
     return this.http.get<Team[]>(`${this.apiServerUrl}/teams`);
   }
 
+  public getTeamsByLeagueId(leagueId ?: number ) : Observable<Team[]>{
+
+    return this.http.get<Team[]>(`${this.apiServerUrl}/teams/leagueId/${leagueId}`);
+
+  }
+
   public getTeamById(teamId : number) : Observable<Team>{
     return this.http.get<Team>(`${this.apiServerUrl}/teams/${teamId}`);
   }
@@ -41,12 +47,15 @@ export class HttpService {
   public getAllMatches() : Observable<Match[]>{
     return this.http.get<Match[]>(`${this.apiServerUrl}/matches`);
   }
-  public createFixture() : Observable<Match[]>{
-    return this.http.get<Match[]>(`${this.apiServerUrl}/matches/create`)
+  public getMatchesByLeagueId(leagueId ?: number):Observable<Match[]>{
+    return this.http.get<Match[]>(`${this.apiServerUrl}/matches/matchesByLeague/${leagueId}`);
   }
-  public createNewFixture(teamList : Team[]) : Observable<Match[]>{
-    return this.http.post<Match[]>(`${this.apiServerUrl}/matches/createFix`,teamList)
+  public createFixture(leagueId ?: number) : Observable<Match[]>{
+    return this.http.get<Match[]>(`${this.apiServerUrl}/matches/create/${leagueId}`);
   }
+ public deleteAllMatches() : Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/matches/delete`);
+ }
 
   public updateMatch(match : Match) :Observable<Match>{
     return this.http.put<Match>(`${this.apiServerUrl}/matches/update`,match)
@@ -56,7 +65,9 @@ export class HttpService {
     return this.http.post<Match[]>(`${this.apiServerUrl}/matches/save`,matchList)
   }
 
-
+  public deleteMatchByLeagueId(leagueId ?: number):Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/matches/deleteByLeagueId/${leagueId}`);
+  }
   public getMatch(matchId : number): Observable<Match>{
 
     return this.http.get<Match>(`${this.apiServerUrl}/matches/${matchId}`);
@@ -66,9 +77,18 @@ export class HttpService {
     return this.http.post<League>(`${this.apiServerUrl}/leagues/save`,league)
   }
 
+  public deleteLeague(leagueId ?: number):Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/leagues/delete/${leagueId}`)
+  }
+
   public getAllLeague():Observable<League[]>{
     return this.http.get<League[]>(`${this.apiServerUrl}/leagues`)
   }
+
+  public getLeagueById(leagueId?: number ):Observable<League>{
+    return this.http.get<League>(`${this.apiServerUrl}/leagues/${leagueId}`)
+  }
+
 
 
 

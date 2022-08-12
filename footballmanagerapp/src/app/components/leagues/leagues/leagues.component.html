@@ -1,0 +1,40 @@
+<div class="container">
+<hr>
+  <select [(ngModel)]="selectedLeague" (ngModelChange)="onChangeObj({newLeague : $event})" class="form-select" aria-label="Default select example">
+    <option [ngValue]="league" *ngFor="let league of leagues" value="{{league.leagueId}}">{{league.name}}</option>
+  </select>
+  <br>
+  <button class="btn btn-danger" (click)="deleteLeague()">Delete League</button>
+  <h4>{{selectedLeague?.name}}  Season's Teams</h4>
+
+  <table *ngIf="selectedLeague" class="table ">
+    <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Features</th>
+      <th scope="col">Power</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let teamTab of teams" >
+      <td ><img style="width: 50px;height: 50px" src="{{teamTab.emblem}}"></td>
+      <td>{{teamTab.name}}</td>
+      <td>{{teamTab.features}}</td>
+      <td>{{teamTab.power}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="row " *ngIf="selectedLeague">
+    <div class="btn-group">
+      <button type="button" class="btn btn-success" (click)="createFixture()">create fix</button>
+      <button type="button" class="btn btn-warning" (click)="deleteFixture()">delete</button>
+      <button type="button" class="btn btn-info" [routerLink]="['/fixture', selectedLeague.leagueId]"  (click)="getMatches()">Show Matches</button>
+
+    </div>
+
+  </div>
+
+
+</div>

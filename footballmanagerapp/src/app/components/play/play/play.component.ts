@@ -4,6 +4,7 @@ import {HttpService} from "../../../services/http.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Team} from "../../../team";
 import {ActivatedRoute} from "@angular/router";
+import {range} from "rxjs";
 
 
 @Component({
@@ -20,18 +21,18 @@ export class PlayComponent implements OnInit {
   team2 !: Team;
   isShow : boolean= false;
   msg :string='';
-  public updatedMatches : Match[] = [];
-
-  constructor(private httpService: HttpService, private router : ActivatedRoute) {
 
 
-  }
+
+
+
+  constructor(private httpService: HttpService, private router : ActivatedRoute) {}
 
   ngOnInit(): void {
     this.getMatches();
 
-  }
 
+  }
 
   getMatches(){
     this.httpService.getMatchesByLeagueId(this.router.snapshot.params['leagueId']).subscribe(response=>{
@@ -46,11 +47,6 @@ export class PlayComponent implements OnInit {
     })
   }
 
-  clickEvent(){
-
-    this.msg = 'match is played';
-
-  }
 
 
   playGame(id: number) {
@@ -180,7 +176,6 @@ export class PlayComponent implements OnInit {
 
         this.httpService.updateMatch(this.match).subscribe(res =>{
 
-
           this.isShow = true;
 
         });
@@ -199,9 +194,7 @@ export class PlayComponent implements OnInit {
   public close(){
     this.isShow = false;
 
-
   }
-
 
 
 }

@@ -1,11 +1,12 @@
 <div class="container">
-<hr>
+<br>
   <select [(ngModel)]="selectedLeague" (ngModelChange)="onChangeObj({newLeague : $event})" class="form-select" aria-label="Default select example">
     <option [ngValue]="league" *ngFor="let league of leagues" value="{{league.leagueId}}">{{league.name}}</option>
   </select>
   <br>
   <button class="btn btn-danger" (click)="deleteLeague()">Delete League</button>
-  <h4>{{selectedLeague?.name}}  Season's Teams</h4>
+ <hr>
+  <h4>{{selectedLeague?.name}} Teams</h4>
 
   <table *ngIf="selectedLeague" class="table ">
     <thead>

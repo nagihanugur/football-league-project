@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     this.httpService.getTeams().subscribe(
       (response : Team [])=>{
 
-        this.filteredTeams = response.slice(1,5);
+        this.filteredTeams = response.slice(2,5);
 
       },
       (error : HttpErrorResponse)=>{

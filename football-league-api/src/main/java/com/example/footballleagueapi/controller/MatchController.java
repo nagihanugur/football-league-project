@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @RestController
@@ -108,6 +109,15 @@ public class MatchController {
     public ResponseEntity<Void> deleteMatchesByLeagueId(@PathVariable Integer leagueId){
         ServiceResult<Void> serviceResult = matchService.deleteMatchesByLeagueId(leagueId);
 
+        if (serviceResult.isSuccess()){
+            return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/matchesByDate/{id}/{date}")
+    public ResponseEntity<List<MatchDto>> getMatchesByDate(@PathVariable Integer id, @PathVariable Integer date){
+        ServiceResult<List<MatchDto>> serviceResult = matchService.getMatchesByDate(id,date);
         if (serviceResult.isSuccess()){
             return new ResponseEntity<>(serviceResult.getData(), HttpStatus.OK);
         }

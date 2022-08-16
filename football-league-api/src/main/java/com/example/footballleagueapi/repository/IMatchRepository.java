@@ -11,6 +11,7 @@ import java.util.List;
 public interface IMatchRepository extends CrudRepository<Match,Integer> {
 
     List<Match> getAllByOrderByMatchId();
+    List<Match> findAllByLeague_LeagueIdAndAndMatchDate(Integer id, Integer date);
 
 
 }

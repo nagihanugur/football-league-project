@@ -171,6 +171,15 @@ public class MatchService {
 
     }
 
+    public ServiceResult<List<MatchDto>> getMatchesByDate(Integer id, Integer date){
+
+        List<Match> matchList = matchRepository.findAllByLeague_LeagueIdAndAndMatchDate(id, date);
+        List<MatchDto> matchDtoList = matchMapper.toMatchDtoList(matchList);
+
+        return new ServiceResult<List<MatchDto>>(matchDtoList);
+
+    }
+
 
 //CREATE MATCH
 
